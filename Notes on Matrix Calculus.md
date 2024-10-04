@@ -1,4 +1,3 @@
-## Notation and Preliminaries
 
 ### Scalars, Vectors, and Matrices
 
