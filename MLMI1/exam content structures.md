@@ -1,0 +1,122 @@
+
+ - 2023 
+	- **Maximum Likelihood and Maximum A Posteriori (MAP) Estimation**
+	    - Definition and relation between maximum likelihood and MAP estimates.
+	    - Computing MAP estimates in the context of noisy measurements.
+	    - Behavior of MAP estimates as variance increases.
+	- **Bayesian Inference with Noisy Depth Measurements**
+	    - Applying Bayes' rule for posterior distribution with noisy measurements.
+	    - Multivariate Gaussian distribution and posterior uncertainty in the presence of correlation.
+	- **Linear Regression Model**
+	    - Likelihood function for a linear regression model with Gaussian noise.
+	    - Maximum likelihood estimation for model parameters.
+	    - Sequential update of parameters in a streaming data context without storing historical data.
+	- **MAP Estimation for Noise Variance in Regression**
+	    - Deriving the MAP estimate for variance using a given prior.
+	    - Interpretation of prior parameters in Bayesian inference.
+	- **Clustering with EM Algorithm**
+	    - Defining the E-step of the EM algorithm for a clustering model.
+	    - Calculation of the E-step update for clustering using a generative model with Bernoulli-distributed features.
+	    - Variational free energy in the context of categorical latent variables.
+	- **M-step of the EM Algorithm**
+	    - Defining the M-step of the EM algorithm.
+	    - Calculation of the M-step update with both soft and hard assignments from the E-step.
+	- **Gaussian AR(1) Process**   
+	    - Definition of the Gaussian AR(1) process.
+	    - Summing Gaussian AR(1) variables and deriving the parameters for the resulting process.
+	- **Linear Gaussian State Space Model (LGSSM)**
+	    - Definition and parameterization of an LGSSM.
+	    - Rewriting a model as an LGSSM with hidden states.
+	    - Inference of the most likely trajectory given observations using an appropriate algorithm (likely the Kalman filter).
+
+- 2021
+    - **Bayes’ Rule and Local Posterior Combination**
+        - Definition of Bayes’ rule and inference of unobserved parameters.
+        - Combining local posteriors from different data sources without sharing raw data.
+        - Analysis of performance differences between global and local posteriors.
+    - **COVID-19 Test Inference**
+        - Computing posterior probability of COVID-19 given lateral flow and PCR test results.
+        - Application of Bayesian decision theory for isolation decisions based on test results.
+    - **Student Exam Score Prediction**
+        - Comparison between softmax multi-class classification and Gaussian regression models.
+        - Designing a model to predict student scores based on feature vectors.
+    - **Robot Localization with GPS and Accelerometer Data**
+        - Using linear regression with non-linear basis functions for position predictions.
+        - Feasibility of linear Gaussian state-space models for modeling and predicting position.
+    - **KL Divergence Between Exponential Densities**
+        - Computation of KL divergence between two exponential densities.
+        - Plotting KL divergence as a function of the mean parameter.
+    - **EM Algorithm for Clustering with Laplace Distribution**
+        - Definition and computation of E-step and M-step for a Laplace mixture model.
+        - Implementing a hard E-step and calculating the variational free energy.
+    - **Orange Count Estimation in Bags**
+        - Probability computation of bag weight given the number of oranges.
+        - Posterior inference of the number of oranges in a bag given its weight.
+        - EM algorithm M-step for learning the mean weight of an orange.
+    - **Hidden Markov Model with Discrete States**
+        - Computing observed state transition probabilities from hidden state transitions.
+        - Derivation of an equivalent bigram model for the observed states.
+        - Discussion on the equivalency of HMMs with bigram models for discrete states.
+
+- 2020  
+    - **Bayes’ Rule and Outlier Detection**
+        - Definition of Bayes’ rule and inference of an unobserved variable from observed data.
+        - Automatic detection of outliers in a data stream using Bayes' rule.
+        - Posterior computation for detecting outliers based on Gaussian distributions with different variances.
+    - **Climate Variability in Temperature Measurements**
+        - Modeling temperature measurements as independent Gaussian samples with unknown variance.
+        - Computing posterior distribution over the variance parameter given temperature data.
+        - Interpretation of prior parameters in the variance model.
+    - **MAP and MLE for Variance Estimation**
+        - Defining maximum a posteriori (MAP) and maximum likelihood (MLE) estimators for variance.
+        - Deriving MAP estimate for the variance and conditions under which MAP equals MLE.
+    - **Linear Regression with Heteroscedastic Noise**
+        - Modeling linear regression with input-dependent Gaussian noise.
+        - Bayesian inference for the slope parameter in a linear model with heteroscedastic noise.
+        - Choosing informative input locations for learning the regression slope.
+    - **KL Divergence Between Gaussian Distributions**
+        - Key properties of KL divergence.
+        - Calculation of KL divergence between two univariate Gaussian densities.
+        - Plotting KL divergence as a function of the mean parameter.
+    - **EM Algorithm for Exponential Decay**
+        - Defining E-step for EM algorithm in learning decay constants of exponential distributions.
+        - Calculation of M-step for updating decay constants in an exponential decay model.
+    - **Bigram Model for Discrete Sequences**
+        - Definition of a bigram model with initial and transition probabilities.
+        - Estimating maximum-likelihood parameters from observed sequences.
+        - Evaluation of model performance on held-out sequence and improvement suggestions.
+    - **Parking Sensor Distance Estimation**
+        - Using a Kalman Filter for estimating the current distance to an object with a parking sensor.
+        - Adapting the model for lower sampling rates and deriving new parameters for reduced sample rate.
+
+- 2019
+    - **Bayes' Rule and Inference**
+        - Definition of Bayes' rule and its application to infer an unobserved variable $c$ from an observed variable $d$, assuming both are discrete-valued.
+        - Application involving a coin toss and dice roll game to compute the probability of a coin landing heads given an observed outcome.
+    - **Maximum Likelihood for Exponential Distribution**
+        - Definition of the maximum likelihood estimate for the parameter $\lambda$ in an exponential distribution.
+        - Computation of the MLE for $\lambda$ using observed click times.
+        - Method for storing aggregated data to update MLE without retaining individual observations.
+    - **MAP Estimation with Gaussian Noise**
+        - Definition of the maximum a posteriori (MAP) estimate for an unobserved parameter $\mu$.
+        - Calculation of the MAP estimate of $\mu$ when data is generated by adding Gaussian noise.
+        - Conditions under which the MAP estimate equals the maximum likelihood estimate.
+    - **Binary and Real-Valued Outputs Model**
+        - Modeling a binary output $y_1$ as a function of input $x$ and reasoning for the model choice.
+        - Modeling a real-valued output $y_2$ conditional on $y_1$ and $x$, with an explanation for model suitability.
+    - **K-means Clustering**
+        - Description of the assignment and update steps in the k-means clustering algorithm.
+        - Execution of k-means on a 2D dataset with two clusters, describing the assignment and update steps in detail with initial centers provided.
+    - **KL Divergence Minimization**
+        - Definition of KL divergence between distributions $P(x)$ and $Q(x)$.
+        - Computation of the optimal parameter $\alpha$ that minimizes KL divergence for given distributions.
+        - Justification of the solution for different probability assignments in $P(x)$.
+    - **Hidden Markov Model with Gaussian Observations**
+        - Calculation of the joint distribution over the first two hidden states in a binary hidden state HMM.
+        - Derivation of the joint distribution over the first two observed states using the hidden state distribution.
+        - Identification of the distribution type for the joint distribution over all observed states.
+    - **Bike Hire Scheme and State Transitions**
+        - Drawing a state transition diagram for a public bike hire system with given transition probabilities.
+        - Determination of the stationary distribution from the state transition diagram and discussion on system implications.
+        - Calculation of modified transition probabilities required to maintain equal bike distribution across locations.
+
