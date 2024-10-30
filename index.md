@@ -15,15 +15,15 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 - [Kl divergence properties](KL-divergence-properties.md)
 - [Mle of mog](MLE-MoG.md)
 - [Moments of distributions](MLMI1/heuristics/Moments%x20of%20Distributions.md)
-- [Notes on matrix calculus](MLMI1/heuristics/Notes%20on%20Matrix%20Calculus.md)
+- [Notes on matrix calculus](matrix-calculus.md)
 
 ## Preliminaries
 
-- [0. index](MLMI1/preliminaries/0.%20Index.md)
-- [1. inference](MLMI1/preliminaries/1.%20Inference.md)
-- [2. regression](MLMI1/preliminaries/2.%20Regression.md)
-- [3. classification](MLMI1/preliminaries/3.%20Classification.md)
-- [4. clustering](MLMI1/preliminaries/4.%20Clustering.md)
+- [0. index](MLMI1/preliminaries/index.md)
+- [1. inference](inference.md)
+- [2. regression](regression.md)
+- [3. classification](classification.md)
+- [4. clustering](clustering.md)
 
 ## Cheat-sheets
 
