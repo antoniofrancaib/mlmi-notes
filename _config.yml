@@ -1,3 +1,8 @@
 theme: jekyll-theme-cayman
 title: MLMI Notes
 description: Antonio Franca's notes for MLMI
+
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
