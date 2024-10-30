@@ -1,5 +1,5 @@
 
- - 2023 
+- 2023 
 	- **Maximum Likelihood and Maximum A Posteriori (MAP) Estimation**
 	    - Definition and relation between maximum likelihood and MAP estimates.
 	    - Computing MAP estimates in the context of noisy measurements.
@@ -119,4 +119,29 @@
         - Drawing a state transition diagram for a public bike hire system with given transition probabilities.
         - Determination of the stationary distribution from the state transition diagram and discussion on system implications.
         - Calculation of modified transition probabilities required to maintain equal bike distribution across locations.
+
+- 2018
+    - **Marginal Mean and Conditional Mean**
+        - Computation of the marginal mean $\mu_y$ from the conditional mean $\mu_{y|x}(x)$ and the joint distribution $p(x, y)$.
+        - Application involving autonomous vehicle accidents to calculate the mean stopping distance given initial velocity.
+    - **Posterior Distribution for Gaussian Noise**
+        - Explanation and computation of the posterior distribution $p(x | a, v)$ from prior and sensor noise distributions.
+        - Derivation of the posterior using Gaussian noise models and analysis of its behavior as variance $\sigma_a^2 \to \infty$.
+    - **Maximum Likelihood Estimation (MLE) in Linear Regression**
+        - Calculation of the likelihood and maximum likelihood estimate for slope $m$ in a regression problem.
+        - Identification of the most informative input location $x$ to maximize information about $m$.
+    - **Binary Classification with Logistic Regression**
+        - Logistic regression model for binary classification $P(y = 1 | w, x)$ and its graphical representation.
+        - Modification of the model to account for concentration lapses in workers, with updated plots for varying conditions.
+    - **Binary Latent Feature Model as a Mixture of Gaussians**
+        - Definition and transformation of the binary latent feature model into a mixture of Gaussians, specifying component means and variances.
+    - **Expectation-Maximization Algorithm for Latent Variables**
+        - Derivation of the E-step update for the posterior distribution of latent variables in the binary latent feature model.
+        - Outline of M-step update steps in the EM algorithm.
+    - **Time Series Modeling and First-Order Markov Models**
+        - Suggestion of a first-order Markov model for a 2D time series and reasoning for the model choice.
+        - Development of a latent variable model for $y_t$ given $x_t$ and discussion of its applications.
+    - **Linear Gaussian State Space Model**
+        - Comparison of a custom linear Gaussian model with a standard state-space model.
+        - Transformation of the model into a two-dimensional hidden state form suitable for Kalman filtering and its benefits.
 
