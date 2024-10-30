@@ -1,2 +1,4 @@
 .obsidian/
+_config.yml
 paper-notes/
+generate_index.py
