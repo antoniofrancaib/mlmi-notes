@@ -21,13 +21,12 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 
 - [Classification](MLMI1/preliminaries/classification.md)
 - [Clustering](MLMI1/preliminaries/clustering.md)
-- [Index](MLMI1/preliminaries/index.md)
 - [Inference](MLMI1/preliminaries/inference.md)
 - [Regression](MLMI1/preliminaries/regression.md)
 
 ## Cheat-sheets
 
-- [Em algorithm](MLMI1/cheat-sheets/EM%20Algorithm.md)
+- [Em algorithm](MLMI1/cheat-sheets/EM-algorithm.md)
 
 ## 4m24
 
