@@ -10,20 +10,20 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 
 ## Heuristics
 
-- [Conjugate distributions](conjugate-distributions.md) 
-- [Jensen's inequality](jensen's-inequality.md)
-- [Kl divergence properties](KL-divergence-properties.md)
-- [Mle of mog](MLE-MoG.md)
-- [Moments of distributions](MLMI1/heuristics/Moments%x20of%20Distributions.md)
-- [Notes on matrix calculus](matrix-calculus.md)
+- [Kl divergence properties](MLMI1/heuristics/KL-divergence-properties.md)
+- [Mle mog](MLMI1/heuristics/MLE-MoG.md)
+- [Conjugate distributions](MLMI1/heuristics/conjugate-distributions.md)
+- [Distributions moments](MLMI1/heuristics/distributions-moments.md)
+- [Jensen's inequality](MLMI1/heuristics/jensen's-inequality.md)
+- [Matrix calculus](MLMI1/heuristics/matrix-calculus.md)
 
 ## Preliminaries
 
-- [0. index](MLMI1/preliminaries/index.md)
-- [1. inference](inference.md)
-- [2. regression](regression.md)
-- [3. classification](classification.md)
-- [4. clustering](clustering.md)
+- [Classification](MLMI1/preliminaries/classification.md)
+- [Clustering](MLMI1/preliminaries/clustering.md)
+- [Index](MLMI1/preliminaries/index.md)
+- [Inference](MLMI1/preliminaries/inference.md)
+- [Regression](MLMI1/preliminaries/regression.md)
 
 ## Cheat-sheets
 
