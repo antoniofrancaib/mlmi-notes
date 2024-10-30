@@ -10,11 +10,11 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 
 ## Heuristics
 
-- [Conjugate distributions](MLMI1/heuristics/Conjugate%20Distributions.md)
+- [Conjugate distributions](MLMI1/heuristics/Conjugate-Distributions.md)
 - [Jensen's inequality](MLMI1/heuristics/Jensen's%20Inequality.md)
 - [Kl divergence properties](MLMI1/heuristics/KL%20DIvergence%20Properties.md)
 - [Mle of mog](MLMI1/heuristics/MLE%20of%20MoG.md)
-- [Moments of distributions](MLMI1/heuristics/Moments%20of%20Distributions.md)
+- [Moments of distributions](MLMI1/heuristics/Moments%x20of%20Distributions.md)
 - [Notes on matrix calculus](MLMI1/heuristics/Notes%20on%20Matrix%20Calculus.md)
 
 ## Preliminaries
