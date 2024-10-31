@@ -1,6 +1,8 @@
+title: Machine Learning and Machine Intelligence
+description: Antonio Franca's notes for the MPhil in Machine Learning and Machine Intelligence
+author: Antonio Franca
 theme: jekyll-theme-cayman
-title: MLMI Notes
-description: Antonio Franca's notes for MLMI
+markdown: kramdown
 
 markdown: kramdown
 kramdown:
