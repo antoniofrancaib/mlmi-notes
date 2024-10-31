@@ -3,11 +3,6 @@ layout: default
 title: Index
 ---
 
-# Machine Learning and Machine Intelligence
-
-Welcome to my notes for MLMI and related topics. Use the links below to navigate.
-
----
 
 ## Introduction to Machine Learning (MLMI1)
 - [Classification](MLMI1/preliminaries/classification.md)
