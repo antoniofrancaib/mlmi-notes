@@ -3,7 +3,6 @@ layout: default
 title: Index
 ---
 
-
 ## Introduction to Machine Learning (MLMI1)
 - [Classification](MLMI1/preliminaries/classification.md)
 - [Clustering](MLMI1/preliminaries/clustering.md)
