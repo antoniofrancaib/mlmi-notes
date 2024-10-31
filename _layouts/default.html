@@ -17,17 +17,19 @@
     </script>
 </head>
 <body>
-    <header>
-        <h1>{{ site.title }}</h1>
-        <p>{{ site.description }}</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>{{ site.title }}</h1>
+            <p>{{ site.description }}</p>
+        </header>
 
-    <main>
-        {{ content }}
-    </main>
+        <main>
+            {{ content }}
+        </main>
 
-    <footer>
-        <p>© {{ site.title }} by {{ site.author }}</p>
-    </footer>
+        <footer>
+            <p>© {{ site.title }} by {{ site.author }}</p>
+        </footer>
+    </div>
 </body>
 </html>
