@@ -17,7 +17,7 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 
 ## Computational Statistics
 
-- [5.1 markov chains](4M24/5.1-markov-chains.md)
-- [5.2 metropolis hasting](4M24/5.2-metropolis-hasting.md)
-- [6.1 gibbs sampler](4M24/6.1-gibbs-sampler.md)
-- [6.2 data augmentation](4M24/6.2-data-augmentation.md)
+- [Markov Chains](4M24/5.1-markov-chains.md)
+- [Metropolis Hasting](4M24/5.2-metropolis-hasting.md)
+- [Gibbs Sampler](4M24/6.1-gibbs-sampler.md)
+- [Data Augmentation](4M24/6.2-data-augmentation.md)
