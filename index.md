@@ -30,7 +30,7 @@ Welcome to my notes for MLMI and related topics. Use the links below to navigate
 
 ## 4m24
 
-- [5. markov chains](4M24/5.%20Markov%20Chains.md)
-- [5. metropolis hasting algorithm](4M24/5.%20Metropolis-Hasting%20Algorithm.md)
-- [6. data augmentation and the gibbs sampler](4M24/6.%20Data%20Augmentation%20and%20the%20Gibbs%20Sampler.md)
-- [6. the gibbs sampler](4M24/6.%20The%20Gibbs%20Sampler.md)
+- [5. markov chains](5)markov-chains.md)
+- [5. metropolis hasting algorithm](5.2)-metropolis-hasting.md)
+- [6. data augmentation and the gibbs sampler](6)-data-augmentation.md)
+- [6. the gibbs sampler](6)-gibbs-sampler.md)
