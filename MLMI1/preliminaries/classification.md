@@ -49,13 +49,6 @@ Logistic regression models the probability that a given input $x_n$ belongs to c
 - The decision boundary is defined where $p(y_n = 1 \mid x_n, w) = 0.5$, which corresponds to $a_n = 0$.
 - The orientation of the decision boundary is determined by $w$.
 
-### Visualizing the Logistic Function
-
-- The logistic (sigmoid) function is S-shaped.
-  - As $a_n \to -\infty$, $\sigma(a_n) \to 0$.
-  - As $a_n \to +\infty$, $\sigma(a_n) \to 1$.
-  - At $a_n = 0$, $\sigma(a_n) = 0.5$.
-
 ### Maximum Likelihood Estimation for Logistic Regression
 
 To find the optimal weights $w$, we use maximum likelihood estimation.
@@ -145,11 +138,11 @@ $$
 \sum_{k=1}^K p(y_n = k \mid \mathbf{x}_n, \{\mathbf{w}_k\}_{k=1}^K) = 1
 $$
 
-Thus, the softmax function parameterizes a [categorical distribution](https://en.wikipedia.org/wiki/Categorical_distribution) over the output classes.
+Thus, the softmax function parameterizes a categorical distribution over the output classes.
 
 ## Fitting Using Maximum Likelihood Estimation
 
-To estimate the weight vectors $\{\mathbf{w}_k\}_{k=1}^K$, we use maximum likelihood estimation (MLE).
+To estimate the weight vectors $\{\mathbf{w}_k\}$, we use maximum likelihood estimation (MLE).
 
 ### Likelihood Function
 
