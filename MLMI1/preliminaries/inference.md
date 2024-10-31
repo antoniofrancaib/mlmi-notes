@@ -101,12 +101,12 @@ Once we have the posterior distribution of the parameters, we can make predictio
 
 $$p(x^\ast | D, m) = \int p(x^\ast | \theta, m) \, p(\theta | D, m) \, d\theta$$
 
-- **Predictive Distribution**: $p(x^\ast | D, m)$: Probability of future observations given past data.
+- **Predictive Distribution**: $p(x^\ast \mid D, m)$: Probability of future observations given past data.
 - **Integrating Over Parameters**: We average over all possible parameter values, weighted by their posterior probability.
 
 #### Interpretation
 
-We average all possible predictions $p(x^\ast | \theta, m)$, weighting each by how plausible $\theta$ is given the observed data $D$. This approach naturally incorporates uncertainty in the parameter estimates into our predictions.
+We average all possible predictions $p(x^\ast \mid \theta, m)$, weighting each by how plausible $\theta$ is given the observed data $D$. This approach naturally incorporates uncertainty in the parameter estimates into our predictions.
 
 ### Model Comparison
 
