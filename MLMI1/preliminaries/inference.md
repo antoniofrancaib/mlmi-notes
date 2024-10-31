@@ -133,7 +133,7 @@ The expected reward $R(a)$ for taking action $a$ is calculated as:
 $$R(a) = \sum_x R(a, x) \, p(x | D)$$
 
 - **Reward** $R(a, x)$: Reward for taking action $a$ when the true state of the world is $x$.
-- **Posterior Probability** $p(x | D)$: Probability of state $x$ given data $D$.
+- **Posterior Probability** $p(x \mid D)$: Probability of state $x$ given data $D$.
 
 #### Explanation
 
@@ -234,11 +234,11 @@ The posterior depends on $\lambda$ through the normalization constant $Z(\lambda
 
 #### Understanding the Likelihood
 
-The likelihood function $p(\{x_n\}_{n=1}^N | \lambda)$ represents how probable the observed data are for different values of $\lambda$. It typically peaks at the value of $\lambda$ that makes the observed data most probable.
+The likelihood function $p(\{x_n\}_{n=1}^N \mid \lambda)$ represents how probable the observed data are for different values of $\lambda$. It typically peaks at the value of $\lambda$ that makes the observed data most probable.
 
 #### Posterior Visualization
 
-By plotting the posterior distribution $p(\lambda | \{x_n\}_{n=1}^N)$, we can visualize our updated beliefs about $\lambda$ after observing the data. The shape of the posterior reflects both the data and the prior.
+By plotting the posterior distribution $p(\lambda \mid \{x_n\}_{n=1}^N)$, we can visualize our updated beliefs about $\lambda$ after observing the data. The shape of the posterior reflects both the data and the prior.
 
 #### Summarizing the Posterior
 
@@ -282,9 +282,9 @@ $$\lambda_{\text{ML}} = \underset{\lambda}{\text{argmax}} \; p(\{x_n\}_{n=1}^N |
 
 The Bayesian approach to the radioactive decay problem involves:
 
-1. **Model Specification**: Assuming an exponential decay model $p(x | \lambda)$.
+1. **Model Specification**: Assuming an exponential decay model $p(x \mid \lambda)$.
 2. **Prior Selection**: Choosing a prior $p(\lambda)$ that reflects prior beliefs.
-3. **Posterior Computation**: Applying Bayes' theorem to compute $p(\lambda | \{x_n\}_{n=1}^N)$.
+3. **Posterior Computation**: Applying Bayes' theorem to compute $p(\lambda \mid \{x_n\}_{n=1}^N)$.
 4. **Prediction**: Calculating the predictive distribution for future observations.
 
 This approach provides a principled and coherent method for parameter estimation and prediction, fully accounting for uncertainty.
