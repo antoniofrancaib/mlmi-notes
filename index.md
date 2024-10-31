@@ -1,3 +1,8 @@
+---
+layout: default
+title: Your Title
+---
+
 # MLMI Notes
 
 Welcome to my notes for MLMI and related topics. Use the links below to navigate.
