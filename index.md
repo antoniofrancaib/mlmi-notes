@@ -4,10 +4,10 @@ title: Index
 ---
 
 ## Introduction to Machine Learning (MLMI1)
-- [Classification](MLMI1/preliminaries/classification.md)
-- [Clustering](MLMI1/preliminaries/clustering.md)
 - [Inference](MLMI1/preliminaries/inference.md)
+- [Classification](MLMI1/preliminaries/classification.md)
 - [Regression](MLMI1/preliminaries/regression.md)
+- [Clustering](MLMI1/preliminaries/clustering.md)
 
 ## Computational Statistics (4M24)
 

@@ -3,13 +3,38 @@
 
 Many real-world problems involve estimating unobserved variables from observed data, which is the essence of **inference**. Examples include predicting future temperatures from climate data, estimating dark matter distribution from galaxy rotation, identifying pedestrians from camera images for autonomous vehicles, recommending movies based on user ratings, and predicting genetic diseases from DNA sequences.
 
-| Application              | Observed variable                   | Unobserved variable                     |
-|--------------------------|-------------------------------------|-----------------------------------------|
-| climate science          | earth observations                  | climate forecast                        |
-| physics                  | observational measurements          | fundamental constants                   |
-| autonomous driving       | image pixel values                  | pedestrians and vehicles present in image|
-| movie recommendation     | ratings of watched films            | ratings of unwatched films              |
-| medicine                 | genome DNA                          | susceptibility to genetic diseases      |
+<table>
+    <tr>
+        <th>Application</th>
+        <th>Observed variable</th>
+        <th>Unobserved variable</th>
+    </tr>
+    <tr>
+        <td>climate science</td>
+        <td>earth observations</td>
+        <td>climate forecast</td>
+    </tr>
+    <tr>
+        <td>physics</td>
+        <td>observational measurements</td>
+        <td>fundamental constants</td>
+    </tr>
+    <tr>
+        <td>autonomous driving</td>
+        <td>image pixel values</td>
+        <td>pedestrians and vehicles present in image</td>
+    </tr>
+    <tr>
+        <td>movie recommendation</td>
+        <td>ratings of watched films</td>
+        <td>ratings of unwatched films</td>
+    </tr>
+    <tr>
+        <td>medicine</td>
+        <td>genome DNA</td>
+        <td>susceptibility to genetic diseases</td>
+    </tr>
+</table>
 
 ## Inference and Decision Making
 
