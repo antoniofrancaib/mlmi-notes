@@ -3,15 +3,33 @@
 
 Many real-world problems involve estimating unobserved variables from observed data, which is the essence of **inference**. Examples include:
 
-| Application          | Observed variable        | Unobserved variable                       |
-| -------------------- | ------------------------ | ----------------------------------------- |
-| climate science      | earth observations       | climate forecast                          |
-| autonomous driving   | image pixel values       | pedestrians and vehicles present in image |
-| medicine             | genome DNA               | susceptibility to genetic diseases        |
-
-## Inference and Decision Making
-
-In scientific applications, estimating the value of the unobserved variables is often critical. In engineering, business, and medicine, the purpose is not just inference but also decision making, where uncertainty plays a crucial role. An example is an autonomous car in adverse weather where the certainty of the detected environment influences driving decisions.
+<table>
+    <tr>
+        <th style="width: 30%;">Application</th>
+        <th style="width: 30%;">Observed variable</th>
+        <th style="width: 40%;">Unobserved variable</th>
+    </tr>
+    <tr>
+        <td>climate science</td>
+        <td>earth observations</td>
+        <td>climate forecast</td>
+    </tr>
+    <tr>
+        <td>autonomous driving</td>
+        <td>image pixel values</td>
+        <td>pedestrians and vehicles present </td>
+    </tr>
+    <tr>
+        <td>movie recommendation</td>
+        <td>ratings of watched films</td>
+        <td>ratings of unwatched films</td>
+    </tr>
+    <tr>
+        <td>medicine</td>
+        <td>genome DNA</td>
+        <td>susceptibility to genetic diseases</td>
+    </tr>
+</table>
 
 ## Flavours of Inference and Decision Problems
 
@@ -59,13 +77,7 @@ A more principled approach is Bayesian inference:
 1. Use Bayes' rule to compute the posterior distribution of $\lambda$ given the observed data $\{ x_n \}_{n=1}^N$:
 
 $$
-p(\lambda | \{ x_n \}_{n=1}^N) = \frac{p(\lambda) \prod_{n=1}^N p(x_n|\lambda)}{p(\{ x_n \}_{n=1}^N)}
-$$
-
-   Simplifying, we get:
-
-$$
-p(\lambda | \{ x_n \}_{n=1}^N) \propto p(\lambda) \prod_{n=1}^N p(x_n|\lambda)
+p(\lambda | \{ x_n \}_{n=1}^N) = \frac{p(\lambda) \prod_{n=1}^N p(x_n|\lambda)}{p(\{ x_n \}_{n=1}^N)} \propto p(\lambda) \prod_{n=1}^N p(x_n|\lambda)
 $$
 
 2. Substitute the exponential distribution into Bayes' rule:
@@ -114,36 +126,3 @@ Bayesian inference provides a principled way to estimate parameters by consideri
 4. Calculate the predictive distribution $p(x^\star |\{x_{n}\}_{n=1}^N)$.
 
 The Bayesian approach retains probability distributions over parameters, unlike point estimate methods like MLE and MAP.
-
-# Inference and Decision Making: A Medical Example
-
-### Part 1: Medical Diagnosis
-
-Alice has a disease test. Let \( a = 1 \) indicate disease presence, and \( b = 1 \) a positive test result. The test's reliability is 95%, and 5% of people like Alice have the disease. If Alice tests positive, compute the probability she has the disease.
-
-Use Bayes' rule:
-
-$$
-p(a=1|b=1) = \frac{p(b=1|a=1) p(a=1)}{p(b=1)}
-$$
-
-### Part 2: Treatment Decision
-
-The disease has a treatment that affects quality of life. Treatment decisions involve:
-
-$$
-R(a, t) = \left[ 
-\begin{array}{cc}
-R(a=0, t=0) & R(a=0, t=1) \\
-R(a=1, t=0) & R(a=1, t=1) \\
-\end{array}
-\right] 
-= 
-\left [ \begin{array}{cc}
-10 & 7 \\
-3 & 5 \\
-\end{array}
-\right]
-$$
-
-Using Bayesian decision theory, calculate expected reward for both treatment and non-treatment actions and choose the one with the highest expected reward.
