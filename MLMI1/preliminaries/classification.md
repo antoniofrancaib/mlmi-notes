@@ -31,6 +31,7 @@ Classification is a fundamental task in supervised machine learning where the go
 - **Probabilistic Inference**: Uses probability distributions to make predictions and quantify uncertainty.
 
 ---
+
 # Binary Logistic Classification
 
 Logistic regression models the probability that a given input $x_n$ belongs to class $y_n = 1$ (assuming binary classes $y_n \in \{0, 1\}$).
@@ -106,6 +107,7 @@ $$w_{t+1} = w_t + \eta \nabla_w \ell(w_t)$$
 - $L(y, \hat{y})$: Loss function representing the cost of predicting $\hat{y}$ when the true label is $y$.
 
 ---
+
 # Multi-class Softmax Classification
 
 We extend the binary logistic regression model to handle multiple classes by introducing the **softmax classification model**. In this model, each data point consists of an input vector $\mathbf{x}_n$ and an output label $y_n$, where $y_n \in \{1, 2, \dots, K\}$ indicates the class of the $n$-th data point.
@@ -242,24 +244,9 @@ $$
 
 where $\eta$ is the learning rate.
 
-## Applying Softmax Classification to the Iris Dataset
-
-The softmax classification model can be applied to datasets with multiple classes, such as the Iris dataset, which contains measurements of iris flowers from three species.
-
-- **Features**: Sepal length, sepal width, petal length, petal width.
-- **Classes**: Iris setosa, Iris versicolor, Iris virginica.
-
-By using all four features and the three classes, we can train a softmax classifier to predict the species of an iris flower based on its measurements.
-
-**Visualization**: In practice, we can visualize the decision boundaries and probabilities for each class in the feature space to understand how the model is making predictions.
-
-## Summary
-
-- The **softmax classification model** generalizes logistic regression to handle multiple classes by computing a set of linear activations and passing them through the softmax function to obtain class probabilities.
-- **Maximum likelihood estimation** is used to fit the model, and the gradient of the log-likelihood has a concise form that facilitates optimization.
-- The model can be applied to real-world datasets, and understanding its properties helps in interpreting and improving classification tasks.
 
 ---
+
 # Non-linear Classification
 
 Linear classification models are limited to linear decision boundaries, which may not be suitable for complex datasets. To handle non-linear decision boundaries, we introduce **non-linear basis functions**.
@@ -306,10 +293,6 @@ Using too many basis functions or a small length-scale can lead to overfitting:
 
 By plotting the probability contours or decision boundaries, we can observe how the non-linear model captures complex patterns in the data.
 
-## Summary
-
-- Introducing non-linear basis functions allows the model to capture complex, non-linear relationships between inputs and outputs.
-- Careful selection of the number and type of basis functions is crucial to avoid overfitting.
 
 ---
 # Overfitting in Classification
@@ -332,24 +315,15 @@ Overfitting occurs when a model learns the training data too well, including its
   - Plot training and test log-likelihoods against model complexity.
   - Overfitting is indicated by increasing training log-likelihood and decreasing test log-likelihood.
 
-## Consequences of Overfitting
-
-- The model makes overconfident predictions on training data.
-- Predictions on test data are poor, with low likelihoods.
-- The model fails to capture the underlying distribution.
-
 ## Mitigating Overfitting
 
 - **Regularization**: Introduce penalty terms in the loss function to discourage large weights.
 - **Cross-Validation**: Use validation sets to monitor performance and select model parameters.
 - **Early Stopping**: Halt training when performance on validation data starts to degrade.
 
-## Summary
-
-- Overfitting is a critical issue in classification models, especially when using maximum likelihood estimation without regularization.
-- Understanding and diagnosing overfitting helps in developing models that generalize well to new data.
 
 ---
+
 # k-Nearest Neighbours (kNN) Classification Algorithm
 
 The **k-nearest neighbours (kNN)** algorithm is a simple, non-parametric method used for classification and regression tasks. It classifies a new data point based on the majority class among its $k$ nearest neighbours in the feature space.
@@ -455,6 +429,7 @@ To select the optimal $k$, we can use **cross-validation**:
   - Computationally intensive during prediction due to distance calculations.
 
 ---
+
 # Bayesian Logistic Regression and Laplace Approximation
 
 Logistic regression models the probability of a binary outcome using the logistic function. In a Bayesian framework, we treat the model parameters $\mathbf{w}$ as random variables with a prior distribution and update this belief using observed data.
@@ -602,19 +577,14 @@ $$
 - The variance $\sigma_a^2$ captures how uncertainty in $\mathbf{w}$ affects the prediction at $\mathbf{x}^\ast$.
 - As the amount of data increases, $\boldsymbol{\Sigma}$ shrinks, reducing $\sigma_a^2$ and making predictions more certain.
 
-## Summary
-
-- **Bayesian Logistic Regression** incorporates prior beliefs and provides a probabilistic framework for classification.
-- **Laplace Approximation** allows us to approximate the posterior distribution when a closed-form solution is intractable.
-- **Predictive Distribution** can be approximated by integrating over the approximate posterior, providing estimates that account for model uncertainty.
 
 ---
 
-## Conclusion
+# Conclusion
 
 Classification is a vital area of machine learning with applications across numerous fields. Understanding different classification models, their assumptions, and limitations is essential for building robust predictive models. Techniques like logistic regression, softmax regression, and kNN provide foundational methods, while Bayesian approaches offer ways to incorporate prior knowledge and quantify uncertainty. Recognizing and addressing overfitting ensures that models generalize well to unseen data.
 
-
+---
 
 # Questions
 
