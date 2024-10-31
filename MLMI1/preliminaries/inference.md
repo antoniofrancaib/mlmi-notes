@@ -1,4 +1,6 @@
 
+
+
 # 1. An Introduction to Inference
 
 Many real-world problems involve estimating unobserved variables from observed data, which is the essence of **inference**. Examples include:
