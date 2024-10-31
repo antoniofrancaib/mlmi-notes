@@ -1,3 +1,7 @@
+---
+layout: default
+title: Inference
+---
 
 ## Introduction to Probabilistic Inference
 
