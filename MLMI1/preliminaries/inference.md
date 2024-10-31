@@ -69,8 +69,8 @@ Bayes' theorem is derived from the product rule and provides a way to update our
 
 $$p(\theta | D) = \frac{p(D | \theta) \, p(\theta)}{p(D)}$$
 
-- **Posterior**: $p(\theta | D)$: Probability of parameters $\theta$ given data $D$.
-- **Likelihood**: $p(D | \theta)$: Probability of data $D$ given parameters $\theta$.
+- **Posterior**: $p(\theta \mid D)$: Probability of parameters $\theta$ given data $D$.
+- **Likelihood**: $p(D \mid \theta)$: Probability of data $D$ given parameters $\theta$.
 - **Prior**: $p(\theta)$: Initial probability of parameters $\theta$.
 - **Marginal Likelihood**: $p(D)$: Probability of data $D$.
 
@@ -84,10 +84,10 @@ In Bayesian learning, we estimate the parameters $\theta$ of a model $m$ given o
 
 $$p(\theta | D, m) = \frac{p(D | \theta, m) \, p(\theta | m)}{p(D | m)}$$
 
-- **Posterior**: $p(\theta | D, m)$: Updated belief about parameters after observing data.
-- **Likelihood**: $p(D | \theta, m)$: Probability of observing data $D$ given parameters $\theta$.
-- **Prior**: $p(\theta | m)$: Initial belief about parameters before observing data.
-- **Evidence**: $p(D | m)$: Probability of observing data under model $m$.
+- **Posterior**: $p(\theta \mid D, m)$: Updated belief about parameters after observing data.
+- **Likelihood**: $p(D \mid \theta, m)$: Probability of observing data $D$ given parameters $\theta$.
+- **Prior**: $p(\theta \mid m)$: Initial belief about parameters before observing data.
+- **Evidence**: $p(D \mid m)$: Probability of observing data under model $m$.
 
 #### Explanation
 
@@ -114,8 +114,8 @@ In Bayesian inference, we can compare different models to see which one explains
 
 $$p(m | D) = \frac{p(D | m) \, p(m)}{p(D)}$$
 
-- **Posterior Probability of Model** $p(m | D)$: Probability that model $m$ is the correct model given the data.
-- **Model Evidence** $p(D | m)$: Probability of the data under model $m$.
+- **Posterior Probability of Model** $p(m \mid D)$: Probability that model $m$ is the correct model given the data.
+- **Model Evidence** $p(D \mid m)$: Probability of the data under model $m$.
 - **Prior Probability of Model** $p(m)$: Initial belief about the plausibility of model $m$.
 
 #### Bayes Factors
