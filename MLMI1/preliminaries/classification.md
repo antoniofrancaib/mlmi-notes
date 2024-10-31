@@ -51,6 +51,7 @@ Classification algorithms are widely used in various domains:
 
 - **Bayesian Logistic Regression and Laplace Approximation**
   - Incorporating prior beliefs and accounting for uncertainty in parameter estimates.
+
 ---
 # Binary Logistic Classification
 
@@ -133,8 +134,6 @@ $$w_{t+1} = w_t + \eta \nabla_w \ell(w_t)$$
 
 - $L(y, \hat{y})$: Loss function representing the cost of predicting $\hat{y}$ when the true label is $y$.
 
-### Extensions to Logistic Regression! 
-
 ---
 # Multi-class Softmax Classification
 
@@ -172,7 +171,7 @@ Thus, the softmax function parameterizes a [categorical distribution](https://en
 
 ## Fitting Using Maximum Likelihood Estimation
 
-To estimate the weight vectors $\{\mathbf{w}_k\}_{k=1}^K$, we use maximum likelihood estimation (MLE).
+To estimate the weight vectors $\{w_k\}_{k=1}^K$, we use maximum likelihood estimation (MLE).
 
 ### Likelihood Function
 
