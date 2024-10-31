@@ -2,19 +2,18 @@
 layout: default
 title: Classification
 ---
+## Outline of Topics
+
+- **Binary Logistic Classification**
+- **Multi-class Softmax Classification**
+- **Non-linear Classification**
+- **Overfitting in Classification**
+- **k-Nearest Neighbours (kNN) Classification**
+- **Bayesian Logistic Regression and Laplace Approximation**
+
 ## Introduction to Classification
 
 Classification is a fundamental task in supervised machine learning where the goal is to predict a discrete output $y^\ast$ for a given input $x^\ast$, based on a training set of input-output pairs $\{(x_n, y_n)\}_{n=1}^N$. Unlike regression, which predicts continuous outputs, classification focuses on assigning inputs to discrete categories or classes.
-
-## Importance of Classification
-
-Classification algorithms are widely used in various domains:
-
-- **Email Spam Filtering**: Distinguishing between spam and legitimate emails.
-- **Medical Diagnosis**: Predicting diseases based on patient data.
-- **Object Recognition**: Identifying objects in images.
-- **Speech Recognition**: Converting audio signals into text.
-- **Machine Translation**: Translating text from one language to another.
 
 ## Types of Classification Problems
 
@@ -30,27 +29,6 @@ Classification algorithms are widely used in various domains:
 - **Maximum Likelihood Estimation (MLE)**: Estimates model parameters by maximizing the likelihood of the observed data.
 - **Overfitting**: When a model learns the training data too well, including noise, leading to poor generalization.
 - **Probabilistic Inference**: Uses probability distributions to make predictions and quantify uncertainty.
-
-## Outline of Topics
-
-- **Binary Logistic Classification**
-  - Understanding the logistic regression model for binary classification.
-  - Fitting the model using maximum likelihood estimation.
-
-- **Multi-class Softmax Classification**
-  - Extending logistic regression to handle multiple classes using the softmax function.
-
-- **Non-linear Classification**
-  - Introducing non-linear basis functions to handle complex decision boundaries.
-
-- **Overfitting in Classification**
-  - Understanding overfitting and techniques to prevent it.
-
-- **k-Nearest Neighbours (kNN) Classification**
-  - Exploring the kNN algorithm as a non-parametric classification method.
-
-- **Bayesian Logistic Regression and Laplace Approximation**
-  - Incorporating prior beliefs and accounting for uncertainty in parameter estimates.
 
 ---
 # Binary Logistic Classification
@@ -171,7 +149,7 @@ Thus, the softmax function parameterizes a [categorical distribution](https://en
 
 ## Fitting Using Maximum Likelihood Estimation
 
-To estimate the weight vectors $\{w_k\}_{k=1}^K$, we use maximum likelihood estimation (MLE).
+To estimate the weight vectors $\{\mathbf{w}_k\}_{k=1}^K$, we use maximum likelihood estimation (MLE).
 
 ### Likelihood Function
 
