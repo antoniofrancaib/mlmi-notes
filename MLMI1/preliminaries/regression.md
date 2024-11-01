@@ -23,6 +23,7 @@ Problems may involve ***interpolation***, where predictions are close to the tra
 | Image super resolution           | Low resolution image                  | High resolution image                 |
 | System identification            | System's state at time $t-1$          | System's state at time $t$            |
 
+---
 # Linear-Regression
 
 ## Least Squares Fitting

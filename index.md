@@ -10,6 +10,12 @@ title: Index
 - [Regression](MLMI1/preliminaries/regression.md)
 - [Clustering](MLMI1/preliminaries/clustering.md)
 
+#### Topics: 
+
+## Probabilistic Machine Learning (4F13)
+
+- [Part I: ](4F13/part-I-1-7.md)
+
 ## Computational Statistics (4M24)
 
 #### Lecture 5
