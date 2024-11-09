@@ -5,10 +5,10 @@ title: Index
 
 ## Introduction to Machine Learning (MLMI1)
 
-- [Inference](1-inference.md)
-- [Classification](3-classification.md)
-- [Regression](2-regression.md)
-- [Clustering](4-clustering.md)
+- [Inference](MLMI1/preliminaries/1-inference.md)
+- [Regression](MLMI1/preliminaries/2-regression.md)
+- [Classification](MLMI1/preliminaries/3-classification.md)
+- [Clustering](MLMI1/preliminaries/4-clustering.md)
 
 #### Topics: 
 
