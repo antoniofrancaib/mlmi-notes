@@ -1,13 +1,6 @@
 # Introduction to Classification
 
-Classification is a fundamental task in supervised machine learning where the goal is to predict a discrete output $y^\ast$ for a given input $x^\ast$, based on a training set of input-output pairs $\{(x_n, y_n)\}_{n=1}^N$. Unlike regression, which predicts continuous outputs, classification focuses on assigning inputs to discrete categories or classes.
-
-## Types of Problems
-
-- **Binary Classification**: Two possible output classes (e.g., spam vs. not spam).
-- **Multi-class Classification**: More than two classes (e.g., classifying types of flowers).
-- **Multi-label Classification**: Each instance may belong to multiple classes simultaneously.
-- **Structured Prediction**: Outputs have interdependent components (e.g., sequence labeling in natural language processing).
+Classification $\rightarrow$ predicting a **discrete output** $y^\ast$ for a given input $x^\ast$, based on a training set of input-output pairs $\{(x_n, y_n)\}_{n=1}^N$. 
 
 ---
 
