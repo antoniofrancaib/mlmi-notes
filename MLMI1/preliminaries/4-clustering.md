@@ -1,22 +1,11 @@
 # Introduction to Clustering
 
-Clustering $\rightarrow$ grouping data points into clusters.  
-	a dataset of $D$-dimensional points, $\mathbf{x}_n$, the goal is to assign each point to one of $K$ clusters, denoted by $s_n$ -based on some defined similarity measure-.
+Clustering $\rightarrow$ grouping a set of **unlabeled inputs** $\{x_n\}_{n=1}^N$ into clusters based on similarity, without prior knowledge of class labels.
 
-**unsupervised learning** task = only the input data ${\mathbf{x}_n}$ is provided. 
-Goal: to uncover hidden structure in the data without explicit output labels.
-
-### Examples:
-
-| Application             | Data                     | Clusters               |
-| ----------------------- | ------------------------ | ---------------------- |
-| Genetic analysis        | Genetic markers          | Ancestral groups       |
-| Medical analysis        | Patient records and data | Disease subtypes       |
-| Image segmentation      | Image pixel values       | Distinct image regions |
-| Social network analysis | Node connections         | Social communities     |
+**Clustering Goal**: To find a function $f: \mathbb{R}^D \rightarrow \{1, 2, \dots, K\}$ that assigns each input $x_n$ to one of $K$ clusters. The goal is to group similar inputs together in such a way that:
 
 ---
-# The K-means Algorithm (deterministic approach)
+# The K-means Algorithm 
 
 Given a dataset $\{\mathbf{x}_n\}_{n=1}^N$ of two-dimensional real-valued data points $\mathbf{x}_n = [x_{1,n}, x_{2,n}]^\top$, we aim to cluster the points into $K$ clusters using the K-means algorithm. The algorithm assigns each datapoint to one of $K$ clusters with centers $\{\mathbf{m}_k\}_{k=1}^K$.
 
@@ -41,6 +30,7 @@ $$
 \mathcal{C} = \sum_{n=1}^N \sum_{k=1}^K s_{n,k} \lvert \lvert \mathbf{x}_n - \mathbf{m}_k \rvert \rvert^2
 $$
 The K-means algorithm minimizes an energy function called the **within-cluster sum of squares** (WCSS), also referred to as the **inertia** or the **distortion**.
+
 ### Optimization Process
 The optimization alternates between two steps:
 
@@ -67,8 +57,10 @@ These steps are repeated until the cluster assignments $\{s_{nk}\}$ no longer ch
   - **Hard Assignments**: Each data point is assigned definitively to one cluster, disregarding the uncertainty or probability of belonging to other clusters.
 
 ![[Pasted image 20241107181435.png]]
+
 ---
-# Mixture of Gaussians (probabilistic approach) and the Expectation Maximisation Algorithm
+
+# Expectation Maximisation (EM) Algorithm for MoG
 
 ## Introduction
 - **Mixture of Gaussians (MoG)**:
@@ -94,9 +86,9 @@ The Mixture of Gaussians model is a probabilistic model that assumes data is gen
      where:
      - $\boldsymbol{\mu}_k$ is the mean vector of cluster $k$.
      - $\boldsymbol{\Sigma}_k$ is the covariance matrix of cluster $k$.
-     - $\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma})$ denotes the multivariate Gaussian distribution:$$
-       \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \frac{1}{\sqrt{(2\pi)^D |\boldsymbol{\Sigma}|}} \exp\left( -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) \right)
-       $$where $D$ is the dimensionality of the data.
+     - $\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma})$ denotes the multivariate Gaussian distribution:
+$$ \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \frac{1}{\sqrt{(2\pi)^D |\boldsymbol{\Sigma}|}} \exp\left( -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) \right)$$
+where $D$ is the dimensionality of the data.
 
 3. **Generative Process**:
    - To generate each data point:
@@ -107,6 +99,7 @@ The Mixture of Gaussians model is a probabilistic model that assumes data is gen
 ## Objective
 - **Inference Goal**:
   - Given the observed data $\{\mathbf{x}_n\}$, infer the latent cluster assignments $\{s_n\}$ and estimate the model parameters $\theta = \{\pi_k, \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k\}$.
+
 - **Maximum Likelihood Estimation (MLE)**:
   - Aim to maximize the likelihood of the observed data:$$
     p(\mathbf{X} \mid \theta) = \prod_{n=1}^N \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}_n; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)
@@ -119,6 +112,7 @@ The EM algorithm provides an iterative approach to find maximum likelihood estim
 ### Detailed Steps
 
 #### 1. Define Free Energy ($\mathcal{F}$)
+
 - **Free Energy** is a lower bound to the log-likelihood, and makes the optimization problem tractable when dealing with latent variables:
 
 $$ \mathcal{F}(q(\mathbf{s}), \theta) = \log p(\mathbf{X} \mid \theta) - KL(q(\mathbf{s}) \parallel p(\mathbf{s} \mid \mathbf{X}, \theta)) \leq \log p(\mathbf{X} \mid \theta) $$
@@ -131,6 +125,7 @@ $$ \mathcal{F}(q(\mathbf{s}), \theta) = \log p(\mathbf{X} \mid \theta) - KL(q(\m
     - **Zero Condition**: $KL = 0$ if and only if $q(\mathbf{s}) = p(\mathbf{s} \mid \mathbf{X}, \theta)$ for all $\mathbf{s}$.
 
 #### 2. Initialization
+
 **Parameter Initialization**:
   - **Importance**: Crucial for the convergence and quality of the final solution.
   - **Strategies**:
@@ -156,6 +151,7 @@ $$\boldsymbol{\Sigma}_k^{(0)} = \mathbf{I}, \quad \forall k
     - Initialize $\boldsymbol{\mu}_k^{(0)}$ based on visual inspection or random selection.
 
 #### 3. E Step (Expectation)
+
 $\rightarrow$ Compute the posterior probabilities (responsibilities) that each data point belongs to each cluster.
 
 - **Objective**: Maximize $\mathcal{F}$ with respect to $q(\mathbf{s})$ while keeping $\theta$ fixed.
@@ -164,8 +160,8 @@ $\rightarrow$ Compute the posterior probabilities (responsibilities) that each d
 $$ \mathcal{F} = - KL(q(\mathbf{s}) \parallel p(\mathbf{s} \mid \mathbf{X}, \theta)) + \text{constant} $$
 
 - **Result**: Set $q(\mathbf{s})$ to the posterior distribution $p(\mathbf{s} \mid \mathbf{X}, \theta)$ (posterior distribution represents our best guess about the hidden variables, given the data and the current parameters).
-- **Calculating the Posterior Probability**:
 
+- **Calculating the Posterior Probability**:
 $$ p(s_n = k \mid \mathbf{x}_n, \theta) = \frac{p(s_n = k \mid \theta) p(\mathbf{x}_n \mid s_n = k, \theta)}{p(\mathbf{x}_n \mid \theta)} $$$$
     = \frac{\pi_k \mathcal{N}(\mathbf{x}_n; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}{\sum_{j=1}^K \pi_j \mathcal{N}(\mathbf{x}_n; \boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}
     $$
@@ -176,11 +172,13 @@ $$ p(s_n = k \mid \mathbf{x}_n, \theta) = \frac{p(s_n = k \mid \theta) p(\mathbf
     q(s_n = k) = \frac{u_{nk}}{\sum_{j=1}^K u_{nj}}, \quad \forall n, k
     $$
 #### 4. M Step (Maximisation)
+
 $\rightarrow$ Update the model parameters $\theta$ using the responsibilities computed in the E step.
 
 - **Objective**: Maximize $\mathcal{F}$ with respect to $\theta$ while keeping $q(\mathbf{s})$ fixed.
+
 - **Maximisation of Free Energy**:
-- 
+
 $$ \mathcal{F}(q(\mathbf{s}), \theta) = \sum_{\mathbf{s}} q(\mathbf{s}) \log p(\mathbf{s}, \mathbf{X} \mid \theta) - \sum_{\mathbf{s}} q(\mathbf{s}) \log q(\mathbf{s})$$
   - Since $q(\mathbf{s})$ is fixed, maximize:
 
@@ -190,6 +188,7 @@ $$\mathcal{Q}(\theta) = \sum_{\mathbf{s}} q(\mathbf{s}) \log p(\mathbf{s}, \math
 $$ \mathcal{Q}(\theta) = \sum_{n=1}^N \sum_{k=1}^K q(s_n = k) \left[ \log \pi_k - \frac{1}{2} \log |\boldsymbol{\Sigma}_k| - \frac{1}{2} (\mathbf{x}_n - \boldsymbol{\mu}_k)^\top \boldsymbol{\Sigma}_k^{-1} (\mathbf{x}_n - \boldsymbol{\mu}_k) \right] $$
 
 - **Parameter Updates Taking Derivatives**:
+
 **With respect to $\boldsymbol{\mu}_k$**:$$
       \frac{\partial \mathcal{Q}}{\partial \boldsymbol{\mu}_k} = \sum_{n=1}^N q(s_n = k) \boldsymbol{\Sigma}_k^{-1} (\mathbf{x}_n - \boldsymbol{\mu}_k) = 0
       $$      Solving:$$
@@ -227,13 +226,13 @@ $$ \mathcal{F}^{(m+1)} - \mathcal{F}^{(m)}| < \epsilon $$
     - **Poor Initialization**: Can lead to suboptimal clustering results.
     - **Singular Covariance Matrices**: Can occur if clusters collapse, requiring regularization.
 
-## Conclusion
-- **MoG vs. K-means**:
-  - **Flexibility**: MoG can model more complex cluster shapes and handle overlapping clusters.
-  - **Probabilistic Framework**: Provides a probabilistic interpretation of cluster assignments.
-- **EM Algorithm**:
-  - **Powerful Tool**: Efficiently estimates parameters in the presence of latent variables.
-  - **Limitations**: Sensitive to initialization and may converge to local maxima.
-- **Applications**:
-  - Widely used in pattern recognition, computer vision, and machine learning for clustering and density estimation tasks.
+## Limitations
+
+1. **Convergence to Local Optima**: EM is a **greedy algorithm** and only guarantees convergence to a local optimum, which might not be the global optimum. 
+2. **Slow Convergence**: The algorithm can converge slowly, especially if the likelihood surface is flat or has long, narrow peaks. 
+3. **Sensitive to Initialization**: Poor initialization can lead to convergence at an inferior local maximum or slow down the algorithm significantly.
+4. **Requires Knowing the Number of Components**: If this number is incorrect, it can lead to poor results.
+5. **Assumes Independence Among Latent Variables**: In its basic form, EM assumes that latent variables are independent, which may not be realistic for all datasets. 
+
+
 
