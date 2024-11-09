@@ -1,10 +1,12 @@
-# Introduction to Classification
+# Classification
 
 Classification $\rightarrow$ predicting a **discrete output** $y^\ast$ for a given input $x^\ast$, based on a training set of input-output pairs $\{(x_n, y_n)\}_{n=1}^N$. 
 
+**Classification Goal**: To find a function $f: \mathbb{R}^D \rightarrow \mathbb{R}^{K}$ that maps inputs to probabilities over $K$ classes, allowing us to make future predictions by assigning $x^\star$ to one of the $K$ classes.
+
 ---
 
-# Binary Logistic Classification
+# Binary Logistic Classification (K=2)
 
 Logistic regression models the probability that a given input $x_n$ belongs to class $y_n = 1$ (assuming binary classes $y_n \in \{0, 1\}$).
 
@@ -85,7 +87,7 @@ $$w_{t+1} = w_t + \eta \nabla_w \ell(w_t)$$
 
 ---
 
-# Multi-class Softmax Classification
+# Multi-class Softmax Classification (K>2)
 
 We extend the binary logistic regression model to handle multiple classes by introducing the **softmax classification model**. In this model, each data point consists of an input vector $\mathbf{x}_n$ and an output label $y_n$, where $y_n \in \{1, 2, \dots, K\}$ indicates the class of the $n$-th data point.
 
@@ -96,7 +98,6 @@ The model comprises two stages:
 1. **Computing Activations**:
 
    For each class $k$, compute the activation:
-
    $$
    a_{n,k} = \mathbf{w}_k^\top \mathbf{x}_n
    $$
@@ -106,7 +107,6 @@ The model comprises two stages:
 2. **Softmax Function**:
 
    The activations are passed through the softmax function to obtain the probability that data point $\mathbf{x}_n$ belongs to class $k$:
-
    $$
    p(y_n = k \mid \mathbf{x}_n, \{\mathbf{w}_k\}_{k=1}^K) = \frac{\exp(a_{n,k})}{\sum_{k'=1}^K \exp(a_{n,k'})} = \frac{\exp(\mathbf{w}_k^\top \mathbf{x}_n)}{\sum_{k'=1}^K \exp(\mathbf{w}_{k'}^\top \mathbf{x}_n)}
    $$
@@ -164,54 +164,6 @@ To maximize the log-likelihood, we compute its gradient with respect to each wei
 $$
 \frac{\partial \mathcal{L}}{\partial \mathbf{w}_j} = \sum_{n=1}^N (y_{n,j} - s_{n,j}) \mathbf{x}_n
 $$
-
-#### Derivation of the Gradient
-
-Starting from the log-likelihood:
-
-$$
-\mathcal{L} = \sum_{n=1}^N \sum_{k=1}^K y_{n,k} \log s_{n,k}
-$$
-
-Compute the derivative with respect to $\mathbf{w}_j$:
-
-1. **Compute $\frac{\partial s_{n,k}}{\partial a_{n,j}}$**:
-
-   The softmax function is:
-
-   $$
-   s_{n,k} = \frac{\exp(a_{n,k})}{\sum_{k'=1}^K \exp(a_{n,k'})}
-   $$
-
-   The derivative of $s_{n,k}$ with respect to $a_{n,j}$ is:
-
-   $$
-   \frac{\partial s_{n,k}}{\partial a_{n,j}} = s_{n,k} (\delta_{k,j} - s_{n,j})
-   $$
-
-   where $\delta_{k,j}$ is the Kronecker delta function:
-
-   $$
-   \delta_{k,j} =
-   \begin{cases}
-   1 & \text{if } k = j \\
-   0 & \text{if } k \ne j
-   \end{cases}
-   $$
-
-2. **Compute $\frac{\partial \mathcal{L}}{\partial \mathbf{w}_j}$**:
-
-   $$
-   \begin{align*}
-   \frac{\partial \mathcal{L}}{\partial \mathbf{w}_j} &= \sum_{n=1}^N \sum_{k=1}^K y_{n,k} \frac{1}{s_{n,k}} \frac{\partial s_{n,k}}{\partial \mathbf{w}_j} \\
-   &= \sum_{n=1}^N \sum_{k=1}^K y_{n,k} \frac{1}{s_{n,k}} \left( \frac{\partial s_{n,k}}{\partial a_{n,j}} \frac{\partial a_{n,j}}{\partial \mathbf{w}_j} \right) \\
-   &= \sum_{n=1}^N \sum_{k=1}^K y_{n,k} \frac{1}{s_{n,k}} s_{n,k} (\delta_{k,j} - s_{n,j}) \mathbf{x}_n \\
-   &= \sum_{n=1}^N \sum_{k=1}^K y_{n,k} (\delta_{k,j} - s_{n,j}) \mathbf{x}_n \\
-   &= \sum_{n=1}^N \left( y_{n,j} - s_{n,j} \right) \mathbf{x}_n
-   \end{align*}
-   $$
-
-This gradient has an intuitive interpretation: for each data point, we compute the difference between the actual label $y_{n,j}$ and the predicted probability $s_{n,j}$ for class $j$, multiplied by the input $\mathbf{x}_n$.
 
 ### Optimization via Gradient Ascent
 

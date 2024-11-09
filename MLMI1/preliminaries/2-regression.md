@@ -2,7 +2,7 @@
 
 Regression $\rightarrow$ predicting a **continuous output** $y^\star$ given an input vector $x^\star \in \mathbb{R}^D$
 
-Goal: to find a function $f: \mathbb{R}^D \rightarrow \mathbb{R}^{D'}$ to make future predictions $y^\star = f(x^\star)$.
+**Regression Goal**: to find a function $f: \mathbb{R}^D \rightarrow \mathbb{R}^{D'}$ to make future predictions $y^\star = f(x^\star)$.
 
 _Regression Jargon_: 
 - The inputs $\mathbf{x}_n$ are also known as the features, covariates, or independent variables.

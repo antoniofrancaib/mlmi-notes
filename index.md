@@ -10,5 +10,6 @@ title: Index
 - [Regression](MLMI1/preliminaries/2-regression.md)
 - [Classification](MLMI1/preliminaries/3-classification.md)
 - [Clustering](MLMI1/preliminaries/4-clustering.md)
+- [Sequence Modeling](MLMI1/preliminaries/5-sequence-modeling.md)
 
 ...more coming soon...
