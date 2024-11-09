@@ -13,6 +13,7 @@ Formally, given a probability space $(\Omega, \mathcal{F}, P)$:
     - **Discrete Random Variable**: A random variable $X$ is discrete if it takes values in a countable subset of $\mathbb{R}$. It is characterized by a **probability mass function** (PMF), $p_X: \mathbb{R} \to [0, 1]$, where $p_X(x) = P(X = x)$.
     - **Continuous Random Variable**: A random variable $X$ is continuous if it can take any value in an interval of $\mathbb{R}$ and is described by a **probability density function** (PDF), $f_X: \mathbb{R} \to [0, \infty)$, where $P(a \leq X \leq b) = \int_a^b f_X(x) , dx$ for any interval $[a, b] \subset \mathbb{R}$.
 
+---
 # Sum Rule
 
 The **sum rule** (or **law of total probability**) allows us to obtain the marginal probability of a random variable by summing (or integrating) over all possible values of another random variable. Given two random variables $X$ and $Y$ defined on the same probability space $(\Omega, \mathcal{F}, P)$, the sum rule is stated as follows:
@@ -61,12 +62,12 @@ $$
 p(\theta | D) = \frac{p(D | \theta) \, p(\theta)}{p(D)}
 $$
 where:
-- $p(\theta | D)$ is the **posterior probability**: the probability of the parameter $\theta$ given data $D$.
-- $p(D | \theta)$ is the **likelihood**: the probability of data $D$ given parameter $\theta$.
+- $p(\theta \mid D)$ is the **posterior probability**: the probability of the parameter $\theta$ given data $D$.
+- $p(D \mid \theta)$ is the **likelihood**: the probability of data $D$ given parameter $\theta$.
 - $p(\theta)$ is the **prior probability**: the initial probability of parameter $\theta$ before observing data $D$.
 - $p(D)$ is the **marginal likelihood** or **evidence**: the total probability of data $D$, computed as:
   $$
-  p(D) = \int p(D | \theta) \, p(\theta) \, d\theta
+  p(D) = \int p(D \mid \theta) \, p(\theta) \, d\theta
   $$
   for continuous parameters or as a sum for discrete parameters.
 
