@@ -1,8 +1,4 @@
----
-layout: default
-title: Inference
----
-## Probabilistic Inference
+# Probabilistic Inference
 
 Probabilistic inference is the process of deducing the probabilities of certain outcomes or parameters given observed data, within the framework of probability theory. 
 
@@ -82,6 +78,6 @@ $$\theta_{\text{ML}} = \underset{\lambda}{\text{argmax}} \; p(\{x_n\}_{n=1}^N | 
 - **Uncertainty Quantification**: Bayesian inference naturally accounts for uncertainty in $\theta$, while MLE does not.
 - **Prior Information**: Bayesian inference incorporates prior beliefs, which can be beneficial when data are scarce.
 
-The **MAP** and **MLE** estimates are the same when the prior is flat and non-zero over the relevant parameter space where the likelihood function has support.
+The **MAP** and **MLE** estimates are the same when the prior is ***flat*** and non-zero over the relevant parameter space where the likelihood function has support.
 
 

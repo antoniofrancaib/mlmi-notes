@@ -5,6 +5,7 @@ title: Index
 
 ## Introduction to Machine Learning (MLMI1)
 
+- [Background](MLMI1/preliminaries/0-prob-background.md)
 - [Inference](MLMI1/preliminaries/1-inference.md)
 - [Regression](MLMI1/preliminaries/2-regression.md)
 - [Classification](MLMI1/preliminaries/3-classification.md)

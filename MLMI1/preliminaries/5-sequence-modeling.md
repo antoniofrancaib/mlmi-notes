@@ -1,4 +1,3 @@
-
 # Introduction to Sequence Modeling 
 Sequence modeling is a fundamental concept in statistical modeling and machine learning, dealing with data where order and context are crucial. 
 

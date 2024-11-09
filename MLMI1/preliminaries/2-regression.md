@@ -1,4 +1,4 @@
-# Introduction to Regression
+# Regression
 
 Regression $\rightarrow$ predicting a **continuous output** $y^\star$ given an input vector $x^\star \in \mathbb{R}^D$
 
@@ -18,7 +18,7 @@ Problems may involve ***interpolation***, where predictions are close to the tra
 
 ## Least Squares Fitting
 
-Consider a dataset with $N=10$ scalar input-output pairs $\{(x_{n}, y_{n})\}_{n=1}^N$. We aim to fit a linear model:
+Consider a dataset with $N$ scalar input-output pairs $\{(x_{n}, y_{n})\}_{n=1}^N$. We aim to fit a linear model:
 $$f(x) = w_1 x + w_0$$
 
 We estimate $w_0$ and $w_1$ by minimizing the cost function $C_2$, defined as the sum of squared distances between observed outputs and the model predictions:

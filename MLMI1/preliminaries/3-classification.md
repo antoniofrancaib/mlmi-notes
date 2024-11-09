@@ -1,7 +1,3 @@
----
-layout: default
-title: Classification
----
 # Introduction to Classification
 
 Classification is a fundamental task in supervised machine learning where the goal is to predict a discrete output $y^\ast$ for a given input $x^\ast$, based on a training set of input-output pairs $\{(x_n, y_n)\}_{n=1}^N$. Unlike regression, which predicts continuous outputs, classification focuses on assigning inputs to discrete categories or classes.
