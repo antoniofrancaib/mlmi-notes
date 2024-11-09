@@ -145,3 +145,40 @@
         - Comparison of a custom linear Gaussian model with a standard state-space model.
         - Transformation of the model into a two-dimensional hidden state form suitable for Kalman filtering and its benefits.
 
+
+- 2016
+    - **Posterior Distribution for Gaussian Noise**
+        - Calculation of the posterior distribution over depth $p(d|y,\sigma_y^2)$ given Gaussian prior and noise distributions.
+        - Analysis of the posterior as measurement noise $\sigma_y^2 \to \infty$.
+    - **MAP Estimation for Coin Bias**
+        - Derivation of the posterior distribution over the bias $p(\rho | x_{1:N}, n_0, N_0)$ of a biased coin.
+        - Computation of the MAP estimate for the bias.
+        - Interpretation of prior distribution parameters $n_0$ and $N_0$.
+    - **Bayesian Decision Theory and Optimal Point Estimate**
+        - Explanation of using Bayesian Decision Theory to determine an optimal point estimate $\hat{x}$.
+        - Calculation of the optimal estimate for a reward function $R(\hat{x}, x) = -( \hat{x} - x )^2$.
+    - **Maximum Likelihood Estimation in Linear Regression**
+        - Expression for the log-likelihood of parameter $a$ in a regression model with correlated noise.
+        - Calculation of the maximum likelihood estimate for $a$.
+        - Discussion of whether additional outputs $\{z_n\}$ provide useful information for estimating $a$.
+    - **Regression Model Selection**
+        - Proposal of suitable regression models $p(y_n | x_n)$ for two datasets with different data distributions.
+        - Explanation and parameter selection for each proposed model.
+    - **Optimization of Encoding and Decoding Weights**
+        - Minimization of reconstruction error $\mathcal{C} = \sum_n \| y_n - \hat{y}_n \|^2$ with respect to decoding weights $r$.
+        - Substitution of optimized $r$ back into $\mathcal{C}$ to obtain cost in terms of encoding weights $w$.
+        - Minimization of the resulting cost with respect to $w$, examining uniqueness of the solution.
+    - **EM Algorithm for Mixture of Gaussians**
+        - Computation of the posterior $p(s_n = 1 | y_n)$ in a Gaussian mixture model.
+        - Explanation of using the EM algorithm for component mean estimation, with M-step update.
+        - Discussion on the potential for overfitting in the EM algorithm.
+    - **Forecasting in Linear Gaussian State Space Models**
+        - Transformation of the posterior over latent state $x_T$ into a forecast for $y_{T+1}$.
+        - Extension of forecast to $\tau$-step predictions $p(y_{T+\tau} | y_{1:T})$.
+        - Analysis of the behavior of $p(y_{T+\tau} | y_{1:T})$ as $\tau \to \infty$.
+    - **Hidden Markov Model Definition and Application**
+        - Definition of probabilistic equations for an HMM with discrete observations, including initial state probabilities, transition matrix, and emission matrix.
+        - Design of an HMM to model a sequence of symbols with repeated patterns, specifying states, transition matrix, emission matrix, and initial state probabilities.
+    - **HMM for Time Series with Multiple Observations**
+        - Suggestion of a suitable HMM for a given time-series and specification of model equations.
+        - Extension of the HMM to jointly model a second observed time-series measured simultaneously.

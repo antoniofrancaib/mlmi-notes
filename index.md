@@ -5,16 +5,16 @@ title: Index
 
 ## Introduction to Machine Learning (MLMI1)
 
-- [Inference](MLMI1/preliminaries/inference.md)
-- [Classification](MLMI1/preliminaries/classification.md)
-- [Regression](MLMI1/preliminaries/regression.md)
-- [Clustering](MLMI1/preliminaries/clustering.md)
+- [Inference](1-inference.md)
+- [Classification](3-classification.md)
+- [Regression](2-regression.md)
+- [Clustering](4-clustering.md)
 
 #### Topics: 
 
 ## Probabilistic Machine Learning (4F13)
 
-- [Part I: ](4F13/part-I-1-7.md)
+- [Part I: Supervised non-parametric probabilistic inference using Gaussian processes ](part-I-1-13.md)
 
 ## Computational Statistics (4M24)
 
