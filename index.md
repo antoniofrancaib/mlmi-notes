@@ -15,7 +15,7 @@ title: Index
 
 ## Probabilistic Machine Learning (4F13)
 
-- [Part I: Supervised non-parametric probabilistic inference using Gaussian processes ](part-I-1-13.md)
+- [Supervised Non-Parametric Probabilistic Inference](4F13/part-I-1-13.md)
 
 ## Computational Statistics (4M24)
 

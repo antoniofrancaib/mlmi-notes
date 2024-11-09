@@ -1,4 +1,4 @@
-# Part I: Supervised Non-Parametric Probabilistic Inference Using Gaussian Processes
+# Supervised Non-Parametric Probabilistic Inference Using Gaussian Processes
 
 ## Modelling Data
 
