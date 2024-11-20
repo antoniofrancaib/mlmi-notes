@@ -12,4 +12,13 @@ title: Index
 - [Clustering](MLMI1/preliminaries/4-clustering.md)
 - [Sequence Modeling](MLMI1/preliminaries/5-sequence-modeling.md)
 
-...more coming soon...
+Reference Book: 
+## Probabilistic Machine Learning (4F13)
+
+- [Parametric Models](4F13/parametric-models.md)
+- [Gaussian Processes](4F13/gaussian-processes.md)
+- [Probabilistic Ranking](4F13/part-II-15-20)
+- [Text Modeling](4F13/part-III)
+
+Reference Book: 
+
