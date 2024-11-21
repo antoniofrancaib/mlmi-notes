@@ -87,7 +87,7 @@ Generate function values one at a time, conditioning on previous values. This us
 - **Illustration**:
   - The shaded regions and lines in the plots show how the GP updates its predictions as new data points are added.
 
-![Alt Text](../assets/Pasted image 20241119181834.png)
+![Illustration](../assets/Pasted image 20241119181834.png)
 
 ![[Pasted image 20241119181834.png]]
 
