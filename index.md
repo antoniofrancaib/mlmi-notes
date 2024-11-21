@@ -10,10 +10,10 @@
 Reference Book: 
 ## Probabilistic Machine Learning (4F13)
 
-- [Parametric Models](4F13/parametric-models.md)
-- [Gaussian Processes](4F13/gaussian-processes.md)
-- [Probabilistic Ranking](4F13/part-II-15-20)
-- [Text Modeling](4F13/part-III)
+- [Parametric Models](1-parametric-models.md)
+- [Gaussian Processes](2-gaussian-processes.md)
+- [Probabilistic Ranking](3-ranking.md)
+- [Text Modeling](4-text-modeling.md)
 
 Reference Book: 
 Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
