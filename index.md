@@ -1,8 +1,3 @@
----
-layout: default
-title: Index
----
-
 ## Introduction to Machine Learning (MLMI1)
 
 - [Background](0-prob-background.md)
@@ -21,4 +16,4 @@ Reference Book:
 - [Text Modeling](4F13/part-III)
 
 Reference Book: 
-
+Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
