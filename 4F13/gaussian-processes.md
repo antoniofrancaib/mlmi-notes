@@ -1,4 +1,10 @@
-## 9. Gaussian Processes
+# Index
+
+- [Gaussian Processes](#9-gaussian-processes)
+
+
+
+## 9-Gaussian-Processes
 
 ### From Scalar Gaussians to Multivariate Gaussians to Gaussian Processes
 
