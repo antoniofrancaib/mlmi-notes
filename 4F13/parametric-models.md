@@ -1,4 +1,4 @@
-# Supervised Non-Parametric Probabilistic Inference 
+
 
 ## 1. Modelling Data
 
@@ -355,5 +355,3 @@ Given that parameters can be a nuisance and that we are primarily interested in 
 - **Better understanding**: Directly specifies our beliefs about functions.
 
 This leads us to consider models that define priors over functions without explicit parameters, such as Gaussian Processes.
-
----

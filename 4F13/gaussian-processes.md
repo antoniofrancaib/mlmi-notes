@@ -1,9 +1,13 @@
 # Index
 
-- [Gaussian Processes](#9-gaussian-processes)
+- [9-Gaussian-Processes*](#9-gaussian-processes)
+- [10-Gaussian-Processes-and-Data*](#10-gaussian-processes-and-data)
+- [11-Gaussian-Process-Marginal-Likelihood-and-Hyperparameters](#11-gaussian-process-marginal-likelihood-and-hyperparameters)
+- [12-Correspondence-Between-Linear-Models-and-Gaussian-Processes](#12-correspondence-between-linear-models-and-gaussian-processes)
+- [13-Covariance-Functions](#13-covariance-functions)
+- [14-Finite-and-Infinite-Basis-GPs](#14-finite-and-infinite-basis-gps)
 
-
-
+---
 ## 9-Gaussian-Processes
 
 ### From Scalar Gaussians to Multivariate Gaussians to Gaussian Processes
@@ -11,10 +15,7 @@
 1. **Scalar Gaussian**: A single random variable $x$ with distribution $N(\mu, \sigma^2)$.
 
 2. **Multivariate Gaussian**: A vector $x = [x_1, x_2, \dots, x_N]^T$ with joint Gaussian distribution:
-
-   $$
-   p(x \mid \mu, \Sigma) = \frac{1}{(2 \pi)^{N/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)
-   $$
+   $$p(x \mid \mu, \Sigma) = \frac{1}{(2 \pi)^{N/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)$$
 
 3. **Gaussian Process (GP)**: An extension to infinitely many variables.
 
@@ -39,60 +40,89 @@ Key properties:
 - **Marginalization**: The marginal distribution over any subset of variables is Gaussian.
 - **Conditioning**: The conditional distribution given some variables is also Gaussian.
 
-The marginalization property simplifies Gaussian processes (GPs) by leveraging their unique characteristics. The marginalization property allows you to work with finite-dimensional slices of the GP. Specifically: $$ p(\mathbf{x}) = \int p(\mathbf{x}, \mathbf{y}) \, d\mathbf{y}. $$ For a multivariate Gaussian: $$ \begin{bmatrix} \mathbf{x} \\ \mathbf{y} \end{bmatrix} \sim \mathcal{N}\left( \begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}, \begin{bmatrix} A & B^\top \\ B & C \end{bmatrix} \right) \quad \Rightarrow \quad p(\mathbf{x}) \sim \mathcal{N}(\mathbf{a}, A). $$ In Gaussian processes, this property enables predictions based only on finite-dimensional covariance matrices without handling infinite-dimensional computations. 
+The marginalization property simplifies Gaussian processes (GPs) by leveraging their unique characteristics. The marginalization property allows you to work with finite-dimensional slices of the GP. Specifically: 
+$$ p(\mathbf{x}) = \int p(\mathbf{x}, \mathbf{y}) \, d\mathbf{y}. $$ 
+For a multivariate Gaussian: 
+$$ \begin{bmatrix} \mathbf{x} \\ \mathbf{y} \end{bmatrix} \sim \mathcal{N}\left( \begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}, \begin{bmatrix} A & B^\top \\ B & C \end{bmatrix} \right) \quad \Rightarrow \quad p(\mathbf{x}) \sim \mathcal{N}(\mathbf{a}, A). $$ 
+In Gaussian processes, this property enables predictions based only on finite-dimensional covariance matrices without handling infinite-dimensional computations. 
 
 ### GP as a distribution over functions
 A GP defines a distribution over functions. Each finite collection of function values follows a multivariate Gaussian distribution. 
 
-**Example**: $$ p(f) \sim \mathcal{N}(m, k), \quad m(x) = 0, \quad k(x, x') = \exp\left(-\frac{1}{2}(x - x')^2\right). $$ For a finite set of points $\{x_1, x_2, ..., x_N\}$, the function values $f(x_1), f(x_2), ..., f(x_N)$ are jointly Gaussian: $$ f \sim \mathcal{N}(0, \Sigma), \quad \Sigma_{ij} = k(x_i, x_j). $$To visualize a GP, draw samples from this multivariate Gaussian and plot them as functions.
+**Example**: $$ p(f) \sim \mathcal{N}(m, k), \quad m(x) = 0, \quad k(x, x') = \exp\left(-\frac{1}{2}(x - x')^2\right). $$ 
+For a finite set of points $\{x_1, x_2, ..., x_N\}$, the function values $\{f_1, f_2, ..., f_N\}$ are jointly Gaussian: 
 
-### Generating Functions from a GP
+$$ f \sim \mathcal{N}(0, \Sigma), \quad \Sigma_{ij} = k(x_i, x_j). $$
+
+To visualize a GP, draw samples from this multivariate Gaussian and plot them as functions.
+
+### Sampling from a Gaussian Process (GP)
+
 - **Goal**: Generate samples from a joint Gaussian distribution with mean $\mathbf{m}$ and covariance $\mathbf{K}$.
-Simpler case; assume $m = 0$: 
 
-1. **Select Inputs**: Choose $N$ input points $x_1, x_2, \dots, x_N$.
-2. **Compute Covariance Matrix**: $K_{ij} = k(x_i, x_j)$.
-3. **Sample Function Values**: Draw $f \sim N(0, K)$.
-4. **Plot Function**: Plot $f$ versus $x$.
 
-Similarly, for $m \neq 0$:
-  1. Generate random standard normal samples $\mathbf{z} \sim \mathcal{N}(0, I)$.
-  2. Compute $\mathbf{y} = \text{chol}(\mathbf{K})^\top \mathbf{z} + \mathbf{m}$,
-     where $\text{chol}(\mathbf{K})$ is the Cholesky decomposition of $\mathbf{K}$ such that $\mathbf{R}^\top \mathbf{R} = \mathbf{K}$.
+The following two methods are **conceptually the same** in the sense that they both generate samples from the same joint Gaussian prior defined by the GP. However, they differ in how they approach the computation:
 
-The Cholesky factorization ensures the generated samples have the correct covariance structure $\mathbf{K}$.
+- **Direct Sampling**: All samples are generated simultaneously using the full covariance matrix $\mathbf{K}$.
+- **Sequential Sampling**: Samples are generated one by one using conditional distributions, which can be derived from the same $\mathbf{K}$.
 
-#### Sequential Generation
-Generate function values one at a time, conditioning on previous values. This uses properties of conditional Gaussians.
+### **1. Direct Sampling Using Cholesky Decomposition**
+This method generates samples by directly leveraging the multivariate Gaussian distribution:
 
-- **Factorization**:
+- **Steps**:
+  1. **Select Inputs**: Choose $N$ input points $\{x_i\}_{i=1}^{N}$.
+  2. **Covariance Matrix**: Compute the covariance matrix $\mathbf{K}$ for all chosen input points $\{x_i\}_{i=1}^{N}$ using the kernel $k(x_i, x_j)$.
+  3. **Sampling $\mathbf{f}$ from a Gaussian Process**. Both methods are equivalent: 
+
+- **Sample $\mathbf{z}$ and Transform**:
+   - Draw $\mathbf{z} \sim \mathcal{N}(0, I)$, where $\mathbf{z}$ is a vector of independent standard normal samples.
+   - Transform $\mathbf{z}$ to match the desired covariance $\mathbf{K}$:
+ $$
+	     \mathbf{f} = \text{chol}(\mathbf{K})^\top \mathbf{z} + \mathbf{m},
+	     $$
+ where $\mathbf{m}$ is the mean vector.
+
+- **Direct Sampling**:
+   - Directly sample $\mathbf{f} \sim \mathcal{N}(\mathbf{m}, \mathbf{K})$ using computational libraries.
+
+- **Purpose**: The Cholesky decomposition ensures that the resulting samples have the correct covariance $\mathbf{K}$ and mean $\mathbf{m}$.
+
+### **2. Sequential Sampling Using Conditional Gaussians**
+This method generates samples by iteratively sampling one point at a time, conditioning on previously sampled points:
+
+- **Steps**:
+
+1. **Factorization**: Use the chain rule for multivariate Gaussians to factorize the joint distribution: 
   $$
   p(f_1, ..., f_N \mid x_1, ..., x_N) = \prod_{n=1}^N p(f_n \mid f_{<n}, x_{<n}).
   $$
 
-- **Gaussian Process Case**:
-  - The joint prior:
-    $$
+  2. **The joint prior**:
+  
+$$
     p(f_n, f_{<n}) = \mathcal{N} \left( \begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}, \begin{bmatrix} A & B^\top \\ B & C \end{bmatrix} \right).
     $$
-  - Conditional distribution:
-    $$
+
+  3. **Conditional distribution**:
+  
+$$
     p(f_n \mid f_{<n}) = \mathcal{N} \left(\mathbf{a} + BC^{-1}(\mathbf{f}_{<n} - \mathbf{b}), A - BC^{-1}B^\top \right).
     $$
 
-- **Utility**:
-  - Enables sequential sampling of function values from a GP.
-  - Sequential updates provide a practical way to incorporate new data points without recomputing the entire covariance matrix.
+- **Purpose**: This approach samples points sequentially, conditioning on previously sampled values.
 
 - **Illustration**:
   - The shaded regions and lines in the plots show how the GP updates its predictions as new data points are added.
 
-![Alt text](../assets/Pasted image 20241119181834.png)
-
 ![[Pasted image 20241119181834.png]]
 
+#### **Which Method to Use?**
+
+- **Small to Moderate Number of Input Points**: Use direct sampling (Cholesky decomposition) for simplicity and efficiency.
+- **Large Number of Input Points or Online Sampling**: Use sequential sampling, especially if you need to incorporate new input points dynamically without recomputing the entire covariance matrix.
+
 ---
-## 10. Gaussian Processes and Data
+## 10-Gaussian-Processes-and-Data
 
 ### Conditioning on Observations
 Given observed data $D = \{(x_i, y_i)\}_{i=1}^N$, we want to predict $f_*$ at new inputs $x_*$.
@@ -102,7 +132,6 @@ Assumption: Observations $y_i$ are noisy versions of the true function $f(x_i)$:
 $$
 y_i = f(x_i) + \epsilon_i, \quad \epsilon_i \sim N(0, \sigma_n^2)
 $$
-
 ### Non-parametric Gaussian Process Models
 
 In our non-parametric model, the "parameters" are the function itself!
@@ -131,14 +160,20 @@ $$
 where:
 $$
 \begin{aligned}
-\mathbf{m}_{\mid \mathbf{y}}(x) &= \mathbf{k}(x, x)[\mathbf{K}(x, x) + \sigma^2_{\text{noise}} \mathbf{I}]^{-1} \mathbf{y}, \\
-\mathbf{k}_{\mid \mathbf{y}}(x, x') &= \mathbf{k}(x, x') - \mathbf{k}(x, x)[\mathbf{K}(x, x) + \sigma^2_{\text{noise}} \mathbf{I}]^{-1} \mathbf{k}(x, x').
+\mathbf{m}_{\mid \mathbf{y}}(x) &= \mathbf{k}(x, \mathbf{x}) [\mathbf{K}(\mathbf{x}, \mathbf{x}) + \sigma^2_\text{noise} \mathbf{I}]^{-1} \mathbf{y}, \\
+\mathbf{k}_{\mid \mathbf{y}}(x, x') &= k(x, x') - \mathbf{k}(x, \mathbf{x}) [\mathbf{K}(\mathbf{x}, \mathbf{x}) + \sigma^2_\text{noise} \mathbf{I}]^{-1} \mathbf{k}(\mathbf{x}, x').
 \end{aligned}
 $$
 
-### Prior and Posterior 
-- **Prior**: Represents our beliefs about the function before seeing any data.
-- **Posterior**: Updated beliefs after incorporating observed data.
+**Intuition**: 
+*Posterior mean:* 
+	- $\mathbf{k}(x, \mathbf{x})$: Correlation between the test point $x$ and the training points $\mathbf{x}$. This is a **row vector** (size $1 \times N$) of kernel values between the test point $x$ and the $N$ training points $\mathbf{x}$.
+	- $\mathbf{K}(\mathbf{x}, \mathbf{x})$: Encodes correlations among training points . This is an **$N \times N$ matrix**, the inverse of the covariance matrix for the training points (with noise added).
+	- $\left[ \mathbf{K} + \sigma^2_\text{noise} \mathbf{I} \right]^{-1} \mathbf{y}$: Scales the influence of observed data $\mathbf{y}$ based on their uncertainty. This is a **column vector** (size $N \times 1$) of the observed outputs corresponding to the $N$ training points.
+
+*Posterior covariance:* 
+	- The first term $k(x, x')$: Encodes the prior uncertainty between test points. 
+	- The second term subtracts the reduction in uncertainty due to conditioning on the observations $\mathbf{y}$.
 
 **Visualization**:
 - **Prior Samples**: Functions drawn from the GP prior.
@@ -147,8 +182,7 @@ $$
 ![[Pasted image 20241119184053.png]]
 
 ### Predictive Distribution
-
-The predictive distribution for a new input $x_*$ is given by:
+The predictive distribution in Gaussian Processes (GPs) is essentially the posterior distribution over the function values at a new input point $x_*$. This is because GPs are non-parametric models, and we **do not need to integrate over explicit parameters** like in parametric Bayesian models. The predictive distribution for a new input $x_*$ is given by:
 
 $$
 p(y_* \mid x_*, \mathbf{x}, \mathbf{y}) \sim \mathcal{N} \left( \mathbf{k}(x_*, \mathbf{x})^\top \left[\mathbf{K} + \sigma_{\text{noise}}^2 \mathbf{I} \right]^{-1} \mathbf{y}, \, \mathbf{k}(x_*, x_*) + \sigma_{\text{noise}}^2 - \mathbf{k}(x_*, \mathbf{x})^\top \left[\mathbf{K} + \sigma_{\text{noise}}^2 \mathbf{I} \right]^{-1} \mathbf{k}(x_*, \mathbf{x}) \right).
@@ -157,42 +191,54 @@ $$
 - **Mean**: Describes the predicted value at $x_*$.
 - **Variance**: Quantifies uncertainty at $x_*$.
 
----
-
 ### Interpretation of the Predictive Mean and Variance
 
 #### Predictive Mean:
-$$
-\mu(x_*) = \mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K} + \sigma_{\text{noise}}^2 \mathbf{I} \right]^{-1} \mathbf{y}.
-$$
+The predictive mean formula: 
+$$ \mu(x_*) = \mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I} \right]^{-1} \mathbf{y}, $$ can be rewritten as: 
+$$ \mu(x_*) = \sum_{n=1}^N \beta_n y_n = \sum_{n=1}^N \alpha_n k(x_*, x_n), $$ providing significant intuition about how Gaussian Processes make predictions by weighting observations using the kernel.
 
-- This is a weighted sum of the observed data $\mathbf{y}$, where the weights depend on the kernel.
+##### **1. Weighted Sum of Observations** 
+- The formula $\sum_{n=1}^N \beta_n y_n$ expresses the predictive mean $\mu(x_*)$ as a **weighted sum of the observed outputs** $y_n$, where the weights $\beta_n = \sum_{m=1}^N \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}\right]^{-1}_{n,m} k(x_*, x_m)$. Alternatively: 
+$$ \boldsymbol{\beta} = \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}\right]^{-1} \mathbf{k}(\mathbf{x}, x_*), $$
 
-- In kernel literature, this is often expressed as:
-  $$
-  \mu(x_*) = \sum_{n=1}^N \beta_n y_n = \sum_{n=1}^N \alpha_n k(x_*, x_n).
-  $$
-  - **Weights** ($\beta_n, \alpha_n$): Depend on the covariance structure and how $x_*$ relates to the training points $x_n$.
+**Intuition**:
+- **$\beta_n$ as Influence Weights**: The coefficients $\beta_n$ represent the influence of each training data point's similarity to the new input $x_*$ on the predictive mean $\mu(x_*)$. They quantify how much each observed output $y_n$ contributes to the prediction, weighted by the covariance between $x_n$ and $x_*$. The closer the test point $x_*$ is to a training point $x_n$ in the input space (as measured by the kernel), the larger the corresponding weight $\beta_n$, and vice versa. 
 
----
+- **Role in Prediction**: In the expression $\mu(x_*) = \sum_{n=1}^N \beta_n y_n$, each $\beta_n$ scales the observed output $y_n$. This means that the prediction at $x_*$ is a weighted sum of the training outputs, where the weights $\beta_n$ depend on both the covariance structure of the data and the similarity between $x_n$ and $x_*$.
+
+- **Effect of Noise and Correlations**: The inversion of $\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}$ adjusts the weights $\beta_n$ based on noise and correlations in the data. Observations that are more relevant (e.g., closer to $x_*$ or less noisy) will have larger $\beta_n$ values, contributing more to the prediction.
+
+##### **2. Kernel Dependence**
+- The formula expresses the predictive mean $\mu(x_*)$ as a **weighted sum of kernel values** between the test point $x_*$ and the training points $x_n$, where the weights $\alpha_n = \sum_{m=1}^N \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}\right]^{-1}_{n,m} y_m$. Alternatively: 
+$$ \boldsymbol{\alpha} = \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I} \right]^{-1} \mathbf{y} $$
+ **Intuition**: 
+ - **$\alpha_n$ as Influence Weights**:  The coefficients $\alpha_n$ represent the influence of each training data point $(x_n, y_n)$ on the prediction at a new input $x_*$. They quantify how much each observed output $y_n$ contributes to the predictive mean $\mu(x_*)$, after accounting for the correlations (captured by the kernel matrix $\mathbf{K}$) and the noise in the observations. 
+ 
+ - **Role in Prediction**: In the expression $\mu(x_*) = \sum_{n=1}^N \alpha_n k(x_*, x_n),$ each $\alpha_n$ scales the similarity between the new input $x_*$ and the training input $x_n$ (measured by $k(x_*, x_n)$). This means the prediction at $x_*$ is a weighted sum of the similarities to all training points, where the weights $\alpha_n$ are determined by both the training outputs and the covariance structure of the data. 
+ 
+ - **Effect of Noise and Correlations**: The inversion of $\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}$ adjusts the weights $\alpha_n$ based on how noise and correlations between data points affect the reliability of each observation. Data points that are less affected by noise or are more informative (due to higher correlations) will generally have larger $\alpha_n$ values. 
+
+  Conclude that **weights** ($\beta_n, \alpha_n$): Depend on the covariance structure and how $x_*$ relates to the training points $x_n$.
 
 #### Predictive Variance:
 $$
-\sigma^2(x_*) = \mathbf{k}(x_*, x_*) - \mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K} + \sigma_{\text{noise}}^2 \mathbf{I} \right]^{-1} \mathbf{k}(x_*, \mathbf{x}).
+\sigma^2(x_*) = \mathbf{k}(x_*, x_*) - \mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K(x, x)} + \sigma_{\text{noise}}^2 \mathbf{I} \right]^{-1} \mathbf{k}(\mathbf{x}, x_*).
 $$
 
-- The variance has two terms:
+**Intuition**: 
+- The posterior nvariance has two terms:
   1. **Prior Variance** ($\mathbf{k}(x_*, x_*)$): The initial uncertainty in the prior.
-  2. **Explained Variance**: Subtracted based on how well the observed data explains $x_*$.
-
-#### Key Insight:
-1. The variance $\sigma^2(x_*)$ decreases as $x_*$ gets closer to the observed data points, reflecting more confidence in predictions.
-2. The variance is **independent of the observed outputs** $\mathbf{y}$, only depending on the input locations $\mathbf{x}$.
-
-
+  2. **Subtract Information Gained from Data**: Subtracted based on how well the observed data explains $x_*$.
+	   - **Similarity to Training Data**:  
+	     If $x_*$ is similar to training points, $\mathbf{k}(x_*, \mathbf{x})$ will have larger values.
+	   - **Adjust for Noise and Correlation**:  
+	     The inverse term adjusts the influence of each training point based on noise and how the points correlate with each other.
+	   - **Overall Reduction**:  
+	     The product $\mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}\right]^{-1} \mathbf{k}(x_*, \mathbf{x})^\top$ quantifies the total reduction in uncertainty at $x_*$ due to the observed data.
 ---
 
-## 11. Gaussian Process Marginal Likelihood and Hyperparameters
+## 11. Gaussian-Process-Marginal-Likelihood-and-Hyperparameters
 
 ### The GP Marginal Likelihood
 The marginal likelihood (or evidence) is the probability of the observed data under the GP model:
@@ -241,7 +287,9 @@ The marginal likelihood balances data fit and model complexity:
 - Simple models with fewer hyperparameters may not fit the data well but are preferred if they explain the data sufficiently.
 - Complex models may overfit the data but are penalized in the marginal likelihood due to increased complexity.
 
-## 12. Correspondence Between Linear Models and Gaussian Processes
+---
+
+## 12-Correspondence-Between-Linear-Models-and-Gaussian-Processes
 ### From Linear Models to GPs
 Consider a linear model with Gaussian priors:
 
@@ -296,7 +344,7 @@ Conversely, any GP with covariance function $k(x, x') = \phi(x)^T A \phi(x')$ ca
 
 ---
 
-## 13. Covariance Functions
+## 13-Covariance-Functions
 
 ### Key Concepts
 
@@ -437,7 +485,7 @@ Covariance functions have to be possitive definite.
 
 ---
 
-## 14. EXTRA: Finite and Infinite Basis GPs
+## 14-Finite-and-Infinite-Basis-GPs
 
 1. **Finite vs. Infinite Models**  
    - A central question in modeling is whether finite or infinite models should be preferred.
