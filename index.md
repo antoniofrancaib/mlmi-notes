@@ -7,7 +7,8 @@
 - [Clustering](4-clustering.md)
 - [Sequence Modeling](5-sequence-modeling.md)
 
-Reference Book: Bishop, C. M. (2006). _Pattern Recognition and Machine Learning_. Springer.
+Reference Book: [Bishop, C. M. (2006). _Pattern Recognition and Machine Learning_. Springer.](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf)
+
 ## Probabilistic Machine Learning (4F13)
 
 - [Parametric Models](4F13/1-parametric-models.md)
