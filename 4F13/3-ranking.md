@@ -1,12 +1,13 @@
+# Index
 - [15-Introduction-to-Probabilistic-Ranking](#15-Introduction-to-Probabilistic-Ranking )
 - [16-Gibbs-Sampling-for-Inference](#16-Gibbs-Sampling-for-Inference)
 - [17-Gibbs-Sampling-in-TrueSkill](#17-Gibbs-Sampling-in-TrueSkill)
-- [last 3](#second)
+- [18-Factor-Graphs](#18-Factor-Graphs)
+- [19-Applying-Message-Passing-to-TrueSkill™](#19-Applying-Message-Passing-to-TrueSkill™)
 
+---
 
-
-
-## 15-Introduction-to-Probabilistic-Ranking 
+## 15-Introduction-to-Probabilistic-Ranking [-](#index)
 
 ### Motivation
 
@@ -336,8 +337,6 @@ Generate samples from the joint posterior $p(w, t \mid y)$.
 4. **Iterate**:
    Repeat steps 2 and 3 until convergence.
 
----
-
 ### Detailed Derivation of Conditional Distributions
 
 #### Sampling $t_g$ Given $w$
@@ -359,32 +358,11 @@ Combine the prior and likelihood terms:
 $$\Sigma_w^{-1} = \Sigma_0^{-1} + \sum_g \Sigma_{t_g}^{-1}$$
 $$\mu_w = \Sigma_w \left( \Sigma_0^{-1} \mu_0 + \sum_g \Sigma_{t_g}^{-1} \mu_{t_g} \right)$$
 
----
-
-### Practical Considerations in Gibbs Sampling
-
-1. **Convergence and Burn-in**:
-   - Allow the Markov chain to run until it reaches a stationary distribution.
-   - Discard initial samples (burn-in period) to avoid bias.
-
-2. **Autocorrelation and Thinning**:
-   - Successive samples may be correlated; keep every $k$-th sample to reduce autocorrelation.
-
-3. **Assessing Convergence**:
-   - Run multiple chains with different starting points.
-   - Use diagnostic tools to assess whether the chains have converged.
-
-4. **Computational Efficiency**:
-   - Use efficient algorithms for sampling from multivariate Gaussians.
-   - Exploit sparsity in the precision matrix.
-
----
-
-## Making Predictions with TrueSkill™
+### Making Predictions with TrueSkill™
 
 After obtaining samples from the posterior distribution of skills, we can estimate the probability that one player will defeat another.
 
-### Probability of Player $i$ Defeating Player $j$
+#### Probability of Player $i$ Defeating Player $j$
 
 Expectation over Posterior:
 $$p(y_{ij} = +1) = \mathbb{E}_{w_i, w_j} \left[\Phi\left(\frac{w_i - w_j}{\sigma_n}\right)\right]$$
@@ -394,62 +372,12 @@ $$p(y_{ij} = +1) \approx \frac{1}{N} \sum_{s=1}^N \Phi\left(\frac{w_i^{(s)} - w_
 
 where $w_i^{(s)}$ and $w_j^{(s)}$ are samples from the posterior.
 
----
-
-### Betting and Decision Making
-- **Rational Betting**: Use the estimated probabilities to make informed betting decisions.
-- **Strategic Planning**: Coaches and players can assess matchups and tailor strategies accordingly.
 
 ---
 
-## Advantages of the Probabilistic Approach
+# 18-Factor-Graphs
 
-1. **Accounts for Uncertainty**: Provides a measure of confidence in the estimated skills.
-2. **Incorporates Opponent Strength**: Directly models the quality of opponents faced.
-3. **Predictive Power**: Allows computation of match outcome probabilities.
-4. **Dynamic Updating**: Skills are updated with each new match, reflecting current form.
-
----
-
-## Summary
-
-In this masterclass, we have explored the limitations of traditional ranking systems like the ATP ranking and introduced a probabilistic framework for ranking players based on Bayesian inference.
-
-### Key Takeaways:
-- **Probabilistic Modeling**: Modeling player skills and match outcomes probabilistically allows for more accurate and meaningful rankings.
-- **Gibbs Sampling**: A practical method for performing inference when the posterior distribution is intractable.
-- **TrueSkill™**: An example of a Bayesian skill rating system that addresses many deficiencies of traditional ranking methods.
-
-By embracing a probabilistic approach, we can develop ranking systems that are more reflective of true player abilities, account for uncertainties, and provide valuable insights for prediction and decision-making.
-
----
-
-# second
-
-# Factor Graphs and Message Passing in Probabilistic Models
-*Based on lectures by Carl Edward Rasmussen*
-
-## Overview
 Probabilistic graphical models provide a powerful framework for representing complex distributions and performing efficient inference. Among these models, factor graphs are particularly useful for representing the factorization of probability distributions and facilitating efficient computation of marginal and conditional probabilities through message passing algorithms.
-
-In this masterclass, we will delve into the concepts of factor graphs and message passing, explore their application in models like TrueSkill™, and discuss approximation methods like Expectation Propagation (EP) for handling intractable messages. We will thoroughly explain each concept, derive key equations in detail, and develop strong intuitions around these complex ideas.
-
-Our goal is to equip you with a deep understanding of factor graphs, the sum-product algorithm, and their practical applications in probabilistic inference, especially in scenarios where exact computation is challenging.
-
-## Key Concepts
-- **Factor Graphs**: A type of probabilistic graphical model that represents how a function factors into a product of local functions, consisting of variable nodes and factor nodes.
-- **Message Passing Algorithms**: Techniques like the sum-product algorithm (also known as belief propagation) that allow efficient computation of marginals and conditionals in a factor graph.
-- **Application to TrueSkill™**: Using factor graphs and message passing to perform inference in the TrueSkill™ model, which estimates player skills based on game outcomes.
-
-### Challenges in TrueSkill™
-- The TrueSkill™ graph is not a tree, leading to potential issues with message passing algorithms.
-- Some messages do not have standard forms and require approximation.
-
-- **Expectation Propagation (EP)**: An approximation method based on moment matching that allows us to approximate complex messages in the factor graph.
-
----
-
-## Part 1: Introduction to Factor Graphs
 
 ### What are Factor Graphs?
 A factor graph is a bipartite graphical model that represents the factorization of a function, typically a joint probability distribution. It consists of two types of nodes:
@@ -457,13 +385,11 @@ A factor graph is a bipartite graphical model that represents the factorization 
 2. **Factor Nodes**: Represent local functions (factors) that depend on a subset of variables.
 
 Edges connect factor nodes to variable nodes if the factor depends on that variable.
-
-### Purpose of Factor Graphs
+#### Purpose of Factor Graphs
 1. **Visualization**: Provides a clear graphical representation of the dependencies between variables and factors.
 2. **Computation**: Facilitates efficient computation of marginal and conditional distributions through message passing algorithms.
 3. **Generalization**: Factor graphs generalize other graphical models like Bayesian networks (directed graphs) and Markov networks (undirected graphs).
-
-### Example of a Factor Graph
+#### Example of a Factor Graph
 Consider a joint probability distribution that factors as:
 
 $$p(v,w,x,y,z)=f_1(v,w)\cdot f_2(w,x)\cdot f_3(x,y)\cdot f_4(x,z)$$
@@ -473,16 +399,15 @@ The corresponding factor graph has:
 - **Factor Nodes**: $f_1, f_2, f_3, f_4$
 - **Edges**: Connect factors to the variables they depend on.
 
-### Questions We Can Answer Using Factor Graphs
+![[Pasted image 20241121214716.png]]
+#### Questions We Can Answer Using Factor Graphs
 1. **Marginal Distributions**: What is $p(w)$?
 2. **Conditional Distributions**: What is $p(w\mid y)$?
 3. **Efficient Computation**: How can we compute these distributions efficiently using the structure of the factor graph?
 
----
+### Efficient Computation with Factor Graphs
 
-## Part 2: Efficient Computation with Factor Graphs
-
-### Challenges with Naïve Computation
+#### Challenges with Naïve Computation
 Computing marginals directly can be computationally expensive due to the high dimensionality and combinatorial explosion of possible variable configurations.
 
 For example, computing $p(w)$ naively involves:
@@ -491,7 +416,7 @@ $$p(w)=\sum_v \sum_x \sum_y \sum_z f_1(v,w)f_2(w,x)f_3(x,y)f_4(x,z)$$
 
 If each variable can take $K$ values, the computational complexity is $O(K^5)$, which becomes infeasible as $K$ and the number of variables grow.
 
-### Exploiting the Factor Graph Structure
+#### Exploiting the Factor Graph Structure
 The key to efficient computation lies in exploiting the distributive property of multiplication over addition and the separability of the factor graph:
 1. **Distributive Property**: Allows us to rearrange sums and products to reduce computations.
 2. **Tree Structure**: In tree-structured graphs (graphs without loops), each node separates the graph into disjoint subgraphs, enabling recursive computations.
@@ -508,30 +433,31 @@ $$p(w)=\left(\sum_v f_1(v,w)\right)\cdot\left(\sum_x f_2(w,x)\cdot\left(\sum_y f
 
 The complexity reduces from $O(K^5)$ to $O(K^4)$ or even $O(K^2)$ with further optimizations.
 
----
+![[Pasted image 20241121215227.png]]
 
-## Part 3: The Sum-Product Algorithm
+### The Sum-Product Algorithm
 
-### Overview
 The sum-product algorithm is a message passing algorithm used to compute marginal distributions in factor graphs efficiently. It is also known as belief propagation or factor-graph propagation.
 
-### Key Steps in the Sum-Product Algorithm
+#### Key Steps in the Sum-Product Algorithm
 1. **Initialization**: Set initial messages, typically starting with uniform distributions or prior information.
 2. **Message Passing**: Iteratively compute messages from factors to variables and from variables to factors until convergence.
 3. **Marginal Computation**: Once messages have stabilized, compute the marginal distributions by combining incoming messages at each variable node.
 
-### Message Computation Rules
-#### Messages from Factors to Variables
+$$p(t) = \prod_{f \in F_t} m_{f \to t}(t)$$
+
+#### Message Computation Rules
+##### Messages from Factors to Variables
 For a factor $f$ connected to variables $x_1, x_2, \ldots, x_n$, the message from factor $f$ to variable $x_i$ is:
 
-$$m_{f\to x_i}(x_i)=\sum_{x_1,\ldots,x_{i-1},x_{i+1},\ldots,x_n} f(x_1,\ldots,x_n) \prod_{j\neq i} m_{x_j\to f}(x_j)$$
+$$m_{f \to t_1}(t_1) = \sum_{t_2} \sum_{t_3} \cdots \sum_{t_n} f(t_1, t_2, \ldots, t_n) \prod_{i \neq 1} m_{t_i \to f}(t_i)$$
 
 **Interpretation**: Sum over all variables except $x_i$, multiplying the factor $f$ with messages from neighboring variables.
 
 #### Messages from Variables to Factors
 For a variable $x$ connected to factors $f_1, f_2, \ldots, f_k$, the message from variable $x$ to factor $f$ is:
 
-$$m_{x\to f}(x)=\prod_{f'\in ne(x)\setminus \{f\}} m_{f'\to x}(x)$$
+$$m_{t \to f}(t) = \prod_{f_j \in F_t \setminus \{f\}} m_{f_j \to t}(t) = \frac{p(t)}{m_{f \to t}(t)}$$
 
 **Interpretation**: Multiply all incoming messages from neighboring factors except the recipient factor $f$.
 
@@ -544,7 +470,7 @@ $$p(x)=\prod_{f\in ne(x)} m_{f\to x}(x)$$
 
 ---
 
-## Part 4: Applying Message Passing to TrueSkill™
+## 19-Applying-Message-Passing-to-TrueSkill™ [-](#index)
 
 ### The TrueSkill™ Model
 TrueSkill™ is a Bayesian rating system that models player skills and predicts match outcomes. It consists of:

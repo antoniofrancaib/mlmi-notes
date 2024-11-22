@@ -1,6 +1,14 @@
+## Index
 
+- [1. Modelling Data](#1-modelling-data)
+- [2. Linear in the Parameters Regression](#2-linear-in-the-parameters-regression)
+- [4. Probability Fundamentals](#4-probability-fundamentals)
+- [5. Bayesian Inference and Prediction with Finite Regression Models](#5-bayesian-inference-and-prediction-with-finite-regression-models)
+- [7. Marginal Likelihood](#7-marginal-likelihood)
+- [8. Distributions Over Parameters and Functions](#8-distributions-over-parameters-and-functions)
 
-## 1. Modelling Data
+---
+## 1-Modelling-Data
 
 ### Purpose of Models
 Mathematical models are useful for many purposes, including
@@ -61,7 +69,7 @@ A model's role is to make predictions and provide insights into certain data asp
 > — George E. P. Box
 
 ---
-## 2. Linear in the Parameters Regression
+## 2-Linear-in-the-Parameters-Regression
 
 ### The Regression Task
 Given a dataset of $N$ pairs $\{(x_i, y_i)\}_{i=1}^N$:
@@ -168,7 +176,7 @@ Model complexity and uncertainty:
 - We want to reason in terms of a set of possible explanations, not just one.
 
 ---
-## 4. Probability Fundamentals
+## 4-Probability-Fundamentals
 
 ### Basics of Probability
 - **Random Variables**: Quantities whose outcomes are uncertain.
@@ -215,7 +223,7 @@ $$
 - **Interpretation**: Despite a positive test, the probability of cancer is still relatively low due to the low prevalence.
 
 ---
-## 5. Bayesian Inference and Prediction with Finite Regression Models
+## 5-Bayesian-Inference-and-Prediction-with-Finite-Regression-Models
 
 ### Maximum Likelihood vs. Bayesian Inference
 
@@ -271,7 +279,7 @@ $$
 [Some useful Gaussian and Matrix equations](4F13/multivariate-gaussian-densities)
 
 --- 
-## 7. Marginal Likelihood
+## 7-Marginal-Likelihood
 
 ### Definition: 
 The **marginal likelihood**, also known as the **model evidence** is the probability of observing the data given a particular model, integrating out all the model's parameters. 
@@ -325,7 +333,7 @@ By adopting Bayesian methods, we account for parameter uncertainty, avoid overfi
 
 ---
 
-## 8. Distributions Over Parameters and Functions
+## 8-Distributions-Over-Parameters-and-Functions
 
 ### Priors on Parameters Induce Priors on Functions
 In parametric models, we define a model $f_w(x)$ using parameters $w$:
