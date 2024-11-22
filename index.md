@@ -17,6 +17,7 @@ Reference Book: [Bishop, C. M. (2006). _Pattern Recognition and Machine Learning
 - [Factor Graphs](4F13/4-factor-graphs.md)
 - [Text Modeling](4F13/5-text-modeling.md)
 
-Reference Book: Rasmussen, C. E., & Williams, C. K. I. (2006). _Gaussian Processes for Machine Learning_. MIT Press. 
+Reference Book: [Rasmussen, C. E., & Williams, C. K. I. (2006). _Gaussian Processes for Machine Learning_. MIT Press.](https://gaussianprocess.org/gpml/)
+
 
 Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
