@@ -12,8 +12,9 @@ Reference Book:
 
 - [Parametric Models](4F13/1-parametric-models.md)
 - [Gaussian Processes](4F13/2-gaussian-processes.md)
-- [Probabilistic Ranking](4F13/3-ranking.md)
-- [Text Modeling](4F13/4-text-modeling.md)
+- [Probabilistic Ranking](4F13/3-probabilistic-ranking.md)
+- [Factor Graphs](4F13/4-factor-graphs.md)
+- [Text Modeling](4F13/5-text-modeling.md)
 
 Reference Book: 
 Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
