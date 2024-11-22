@@ -1,5 +1,5 @@
 # Index
-- [15-Introduction-to-Probabilistic-Ranking](#15-Introduction-to-Probabilistic-Ranking )
+- [15-Introduction-to-Probabilistic-Ranking](#15-Introduction-to-Probabilistic-Ranking)
 - [16-Gibbs-Sampling-for-Inference](#16-Gibbs-Sampling-for-Inference)
 - [17-Gibbs-Sampling-in-TrueSkill](#17-Gibbs-Sampling-in-TrueSkill)
 - [18-Factor-Graphs](#18-Factor-Graphs)
@@ -7,8 +7,8 @@
 
 ---
 
-## 15-Introduction-to-Probabilistic-Ranking [-](#index)
-
+## 15-Introduction-to-Probabilistic-Ranking
+[index](#index)
 ### Motivation
 
 Competition is a fundamental aspect of human nature and society. It drives progress and excellence in various fields, especially in sports. In contemporary times, ranking systems are prevalent in virtually every sport.
@@ -470,8 +470,8 @@ $$p(x)=\prod_{f\in ne(x)} m_{f\to x}(x)$$
 
 ---
 
-## 19-Applying-Message-Passing-to-TrueSkill™ [-](#index)
-
+## 19-Applying-Message-Passing-to-TrueSkill™ 
+[-](#index)
 ### The TrueSkill™ Model
 TrueSkill™ is a Bayesian rating system that models player skills and predicts match outcomes. It consists of:
 1. **Player Skills ($w_i$)**: Random variables representing the skill levels of players.
