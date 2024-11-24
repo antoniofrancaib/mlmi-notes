@@ -2,8 +2,8 @@
 
 - [9-Gaussian-Processes*](#9-gaussian-processes)
 - [10-Gaussian-Processes-and-Data*](#10-gaussian-processes-and-data)
-- [11-Gaussian-Process-Marginal-Likelihood-and-Hyperparameters](#11-gaussian-process-marginal-likelihood-and-hyperparameters)
-- [12-Correspondence-Between-Linear-Models-and-Gaussian-Processes](#12-correspondence-between-linear-models-and-gaussian-processes)
+- [11-Gaussian-Process-Marginal-Likelihood-and-Hyperparameters*](#11-gaussian-process-marginal-likelihood-and-hyperparameters)
+- [12-Correspondence-Between-Linear-Models-and-Gaussian-Processes*](#12-correspondence-between-linear-models-and-gaussian-processes)
 - [13-Covariance-Functions](#13-covariance-functions)
 - [14-Finite-and-Infinite-Basis-GPs](#14-finite-and-infinite-basis-gps)
 
@@ -173,7 +173,7 @@ $$
 **Intuition**: 
 *Posterior mean:* 
 	- $\mathbf{k}(x, \mathbf{x})$: Correlation between the test point $x$ and the training points $\mathbf{x}$. This is a **row vector** (size $1 \times N$) of kernel values between the test point $x$ and the $N$ training points $\mathbf{x}$.
-	- $\mathbf{K}(\mathbf{x}, \mathbf{x})$: Encodes correlations among training points . This is an **$N \times N$ matrix**, the inverse of the covariance matrix for the training points (with noise added).
+	- $\mathbf{K}(\mathbf{x}, \mathbf{x})$: Encod es correlations among training points . This is an **$N \times N$ matrix**, the inverse of the covariance matrix for the training points (with noise added).
 	- $\left[ \mathbf{K} + \sigma^2_\text{noise} \mathbf{I} \right]^{-1} \mathbf{y}$: Scales the influence of observed data $\mathbf{y}$ based on their uncertainty. This is a **column vector** (size $N \times 1$) of the observed outputs corresponding to the $N$ training points.
 
 *Posterior covariance:* 
@@ -241,9 +241,10 @@ $$
 	     The inverse term adjusts the influence of each training point based on noise and how the points correlate with each other.
 	   - **Overall Reduction**:  
 	     The product $\mathbf{k}(x_*, \mathbf{x}) \left[\mathbf{K} + \sigma_\text{noise}^2 \mathbf{I}\right]^{-1} \mathbf{k}(x_*, \mathbf{x})^\top$ quantifies the total reduction in uncertainty at $x_*$ due to the observed data.
+
 ---
 
-## 11. Gaussian-Process-Marginal-Likelihood-and-Hyperparameters
+## 11-Gaussian-Process-Marginal-Likelihood-and-Hyperparameters
 
 ### The GP Marginal Likelihood
 The marginal likelihood (or evidence) is the probability of the observed data under the GP model:
@@ -252,17 +253,32 @@ $$
 p(y \mid x) = \int p(y \mid f) p(f) \, df
 $$
 
-For GPs with Gaussian noise, this integral can be computed analytically:
+Given $y = f + \epsilon$  where:  
+- $f \sim N(m, K)$ 
+- $\epsilon \sim N(0, \sigma_n^2 I)$  
+
+Since $f$ and $\epsilon$ are independent, the sum $y$ is also Gaussian. The marginal distribution is:  
+
+$$p(y \mid x) = N(y ; m, K + \sigma_n^2 I)$$  
+Taking the natural logarithm of both sides gives the **log marginal likelihood**:  
 
 $$
-\log p(y \mid x) = -\frac{1}{2} y^T (K + \sigma_n^2 I)^{-1} y - \frac{1}{2} \log |K + \sigma_n^2 I| - \frac{N}{2} \log 2 \pi
-$$
-where the matrix $K$ represents the **kernel (or covariance) matrix**. 
+\log p(y \mid x) = -\frac{1}{2} (y - m)^T (K + \sigma_n^2 I)^{-1} (y - m) - \frac{1}{2} \log |K + \sigma_n^2 I| - \frac{N}{2} \log 2\pi
+$$  
+where the matrix $K$ represents the **kernel (or covariance) matrix**.  
+
 
 **Interpretation**:
-- The first term measures how well the model fits the data (data fit).
-- The second term penalizes model complexity (complexity penalty).
-- Occam's Razor is automatically applied, preferring simpler models that explain the data well.
+ **1. First Term: Data Fit**
+- The expression $(y - m)^T (K + \sigma_n^2 I)^{-1} (y - m)$ represents the squared **Mahalanobis distance** of $y$ from the mean. Unlike Euclidean distance, the Mahalanobis distance accounts for the covariance structure of the data, effectively scaling the dimensions according to their variances and covariances. 
+- During model training (e.g., hyperparameter optimization), the objective is to **minimize** this term. Minimizing the discrepancy ensures that the GP model's predictions are as close as possible to the observed data, considering the uncertainty captured by the covariance matrix.
+
+**2. Second Term: Model Complexity (Occam's Razor)**
+- The determinant $|K + \sigma_n^2 I|$ represents the **volume** of the uncertainty captured by the covariance matrix $\Sigma = K + \sigma_n^2 I$ . A larger determinant indicates a more **spread-out** distribution, implying greater uncertainty.
+- This term acts as a **penalty for model complexity**. A more complex model (with a covariance matrix that allows for greater variability) will generally have a larger determinant, leading to a higher penalty. Conversely, a simpler model will have a smaller determinant and thus a smaller penalty.
+- This embodies the principle of **Occam's Razor**, which favors simpler models when possible.
+
+Third term is normalizing constant, i.e. irrelevant when it comes to optimization. 
 
 ### Hyperparameters and Model Selection
 
@@ -270,11 +286,10 @@ where the matrix $K$ represents the **kernel (or covariance) matrix**.
 - **Optimizing Hyperparameters**:
 
    Find $\theta$ that maximize the marginal likelihood:
-
    $$
    \theta^* = \arg \max_\theta \log p(y \mid x, \theta)
    $$
-
+   
    This is a form of model selection.
 
 **Example**:
@@ -291,6 +306,28 @@ The marginal likelihood balances data fit and model complexity:
 
 - Simple models with fewer hyperparameters may not fit the data well but are preferred if they explain the data sufficiently.
 - Complex models may overfit the data but are penalized in the marginal likelihood due to increased complexity.
+
+![[Pasted image 20241124175426.png]]
+
+The mean posterior predictive function is plotted for 3 different length scales (the blue curve corresponds to optimizing the marginal likelihood). Notice, that an almost exact fit to the data can be achieved by reducing the length scale – but the marginal likelihood does not favour this!
+
+Bayes' rule helps identify the right model complexity by leveraging the marginal likelihood, which balances goodness-of-fit with model simplicity. Overly simple models (highly peaked marginal likelihood) fail to capture data variability, while overly complex models (broad marginal likelihood) risk overfitting. The optimal model, guided by Occam's Razor, maximizes the marginal likelihood by being complex enough to explain the data but simple enough to generalize well, inherently penalizing unnecessary complexity. This balance ensures a principled trade-off between model flexibility and parsimony.
+
+![[Pasted image 20241124175711.png]]
+
+**An illustrative analogous example**: 
+
+***Recall***: The formula for the log-likelihood is:
+
+$$
+\log p(y \mid \mu, \sigma^2) = -\frac{1}{2} y^\top I_y y / \sigma^2 - \frac{1}{2} \log |\sigma^2| - \frac{n}{2} \log (2\pi)
+$$
+
+This example demonstrates how fitting the variance $\sigma^2$ of a zero-mean Gaussian distribution affects the likelihood of the observed data. The formula highlights how the log-likelihood balances the goodness-of-fit term $-\frac{1}{2} y^\top I_y y / \sigma^2$ with complexity penalties, such as $-\frac{1}{2} \log |\sigma^2|$ and the constant term $-\frac{n}{2} \log (2\pi)$. The visualizations show how different variances $\sigma^2$ impact the Gaussian’s shape, emphasizing the trade-off between fitting the data well and avoiding overfitting. This optimization ensures the model captures the data's structure effectively.
+
+
+![[Pasted image 20241124180138.png]]
+
 
 ---
 

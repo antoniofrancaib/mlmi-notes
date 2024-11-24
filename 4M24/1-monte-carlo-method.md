@@ -1,228 +1,495 @@
-## Overview
+# Index 
+- [1-The-Monte-Carlo-Method](#1-The-Monte-Carlo-Method)
+- [2-Monte-Carlo-Methods-in-Practice](#2-Monte-Carlo-Methods-in-Practice)
 
-In this lecture, we delve into the Monte Carlo method—a fundamental tool in computational statistics and machine learning. We aim to develop a deep understanding of:
+## 1 - The Monte Carlo Method
 
-- **Introduction and History**: The origins and evolution of the Monte Carlo method.
-- **Evaluating Integrals Numerically**: Challenges and traditional methods in numerical integration.
-- **Evaluating Statistical Expectations**: Connecting integration with statistical expectations.
-- **Central Limit Theorem and Convergence**: Understanding the convergence properties of Monte Carlo estimates.
-- **Rates of Convergence**: Analyzing how the characteristics of functions affect convergence rates.
+The Monte Carlo method is a computational framework rooted in probabilistic principles and random sampling techniques. It is named after the Monte Carlo Casino in Monaco, reflecting its intrinsic reliance on randomness. This method provides a systematic approach for numerically approximating mathematical expressions, particularly integrals, that are analytically intractable. Its robustness and scalability make it an essential tool across a wide range of scientific and engineering disciplines, including physics, finance, and machine learning, where high-dimensional integrals frequently arise.
+
+### Formal Statement
+
+Let $f: X \to \mathbb{R}$ be a measurable function defined on a domain $X \subseteq \mathbb{R}^d$ and $p(x)$ a probability density function such that $p(x) > 0$ for all $x \in X$ where $f(x) \neq 0$. The objective is to evaluate the integral
+$$
+I = \int_X f(x) \, dx.
+$$
+
+Rewriting the integral in terms of a probability distribution $p(x)$, we have:
+
+$$I = \int_X \frac{f(x)}{p(x)} p(x) \, dx = \mathbb{E}_p \left[ \frac{f(X)}{p(X)} \right],$$
+
+where $X \sim p(x)$ and $\mathbb{E}_p[\cdot]$ denotes the expectation with respect to the probability distribution $p(x)$. The Monte Carlo method approximates the expectation $\mathbb{E}_p \left[ \frac{f(X)}{p(X)} \right]$ using $N$ independent and identically distributed (i.i.d.) random samples $X_1, X_2, \ldots, X_N$ drawn from $p(x)$. The corresponding **Monte Carlo estimator** is defined as
+
+$$
+\hat{I} = \frac{1}{N} \sum_{n=1}^N \frac{f(X_n)}{p(X_n)}.
+$$
+
+This estimator is unbiased, meaning $E[\hat{I}] = I$, and its variance decreases as $O(1/N)$, making it suitable for estimating integrals in high-dimensional spaces.
+
+---
+## Numerical Evaluation of Integrals
+
+### The Challenge of Numerical Integration
+Consider the task of evaluating the definite integral:
+
+$$I = \int_0^1 e^{-x^3} \, dx.$$
+
+This integral cannot be expressed in terms of elementary functions and thus lacks a closed-form solution. Traditional numerical methods for approximating integrals include:
+
+- **Midpoint Rule**:
+$$\int_a^b f(x) \, dx \approx (b - a) f\left(\frac{a + b}{2}\right).$$
+
+- **Trapezoidal Rule**:
+$$\int_a^b f(x) \, dx \approx \frac{b - a}{2} \left[f(a) + f(b)\right].$$
+
+![[Pasted image 20241124115430.png]]
+
+Simpson's Rule and higher-order quadrature methods provide better approximations by considering more sample points and higher-order polynomials.
+
+While these methods are effective for one-dimensional integrals, they face significant challenges when extended to higher dimensions:
+
+- **Computational Complexity**: The number of required sample points grows exponentially with the number of dimensions (the **curse of dimensionality**).  
+- **Grid Construction**: Constructing a grid over a high-dimensional space becomes infeasible.  
+- **Error Analysis**: Estimating the error of the approximation becomes increasingly complex.
+
+--- 
+### The Monte Carlo Approach to Integration
+
+#### Basic Idea
+To estimate the integral $I$, we can consider the integral as representing an area (or hypervolume in higher dimensions) under the curve $f(x)$ over the interval $[a, b]$. If we can estimate the fraction of the area under $f(x)$ relative to the total area of the domain, we can approximate $I$.
+
+#### Monte Carlo Estimation
+- **Define the Bounding Region**: Enclose $f(x)$ within a rectangle of area $A = (b - a) M$, where $M$ is an upper bound for $f(x)$ on $[a, b]$.  
+
+- **Random Sampling**: Generate $N$ pairs of random numbers $(x_i, y_i)$, where $x_i$ is uniformly distributed in $[a, b]$ and $y_i$ is uniformly distributed in $[0, M]$.  
+
+- **Counting**: Count the number of samples $N_{\text{below}}$ where $y_i \leq f(x_i)$.  
+
+- **Estimate the Integral**:
+$$I \approx A \times \frac{N_{\text{below}}}{N}.$$
+
+This method is a form of Rejection Sampling, where we accept samples that fall under $f(x)$ and reject those that do not.
+
+![[Pasted image 20241124115835.png]]
+#### Advantages
+- **Dimension Independence**: The error of the Monte Carlo estimation does not directly depend on the dimensionality of the integral.  
+- **Simplicity**: Easy to implement even for complex integrands and domains.  
+- **Scalability**: Computational effort grows linearly with the number of samples, not exponentially with dimension.  
+
+#### Challenges
+- **Convergence Rate**: The convergence of the Monte Carlo estimator is typically slow ($O(N^{-1/2})$), requiring a large number of samples for high accuracy.  
+- **Variance**: The variance of the estimator can be high, especially if the integrand has regions of sharp peaks or discontinuities.
 
 ---
 
-### 1. Introduction and History
+## Monte Carlo Methods for Evaluating Statistical Expectations
 
-#### 1.1 The Origin of the Monte Carlo Method
+### Evaluating Integrals Numerically
 
-- **Monte Carlo Casino**: The method is named after the famous casino in Monaco, symbolizing the element of chance inherent in the technique.
-- **Los Alamos and the Manhattan Project**: During the 1940s, scientists like Stanislaw Ulam, John von Neumann, and Nicholas Metropolis at Los Alamos used random sampling to model neutron diffusion in nuclear weapons research. Metropolis suggested the code-name "Monte Carlo" for this randomization approach.
+- **Numerically**, the Riemann integral is approximated by taking evenly (deterministically) spaced points in the domain of $x_k$, i.e., $[a, b]$. If there are $K$ points, they are separated by:
 
-#### 1.2 Evolution and Ubiquity
+$$\sum_k \Delta_k f(x_k) = \frac{b - a}{K} \sum_k f(x_k).$$
 
-- **Broad Suite of Tools**: The Monte Carlo methods encompass a wide range of stochastic simulation and computational techniques.
-- **Applications Across Disciplines**:
-  - **Physics**: Particle simulations, quantum mechanics.
-  - **Chemistry**: Molecular modeling, reaction dynamics.
-  - **Biology**: Population genetics, epidemiology.
-  - **Engineering**: Reliability analysis, optimization.
-  - **Computer Science**: Algorithm analysis, artificial intelligence.
-  - **Finance**: Option pricing, risk assessment.
-  - **Medicine**: Dosimetry, medical imaging.
-  - **Weather Forecasting**: Climate modeling, prediction algorithms.
-  - **Machine Learning**: Foundational in algorithms like Monte Carlo Tree Search, used by Google DeepMind's AlphaGo, and in Bayesian methods.
+- This converges to $\int_a^b f(x) \, dx \quad \text{as} \quad K \to \infty \quad \text{or} \quad \Delta_k \to 0$. 
 
----
+### Reformulating Integrals as Expectations
+An integral can be expressed as an expectation with respect to a probability distribution. Given:
 
-### 2. Evaluating Integrals Numerically
+$$I = \int_a^b f(x) \, dx = \int_a^b f(x) \cdot 1 \, dx,$$
 
-#### 2.1 The Challenge of Numerical Integration
+we can introduce a probability density function $p(x)$ over $[a, b]$ and write:
 
-Consider the integral:
+$$I = \int_a^b f(x) \cdot \frac{1}{p(x)} p(x) \, dx = \mathbb{E}_p\left[\frac{f(X)}{p(X)}\right].$$
 
-$$
-I = \int_0^1 e^{-x^3} \, dx
-$$
+When $p(x)$ is the uniform distribution over $[a, b]$, $p(x) = \frac{1}{b - a}$, and:
 
-- **No Analytic Solution**: The integral lacks a closed-form solution; we cannot express it using elementary functions.
-- **Need for Numerical Methods**: We must approximate the integral using numerical techniques.
+$$I = (b - a) \cdot \mathbb{E}_p[f(X)].$$
 
-#### 2.2 Deterministic Numerical Approaches
+### Monte Carlo Estimation of Expectations
+Given that $I = \mathbb{E}_p[g(X)]$, where $g(X) = \frac{f(X)}{p(X)}$, we can estimate $I$ using samples from $p(x)$:
 
-- **2.2.1 Midpoint Rule**: Approximates the integral by evaluating the function at the midpoint:
+$$\hat{I} = \frac{1}{N} \sum_{n=1}^N g(X_n),$$
 
-  $$
-  I \approx (b - a) \cdot f \left( \frac{a + b}{2} \right)
-  $$
+where $X_n \sim p(x)$.
 
-- **2.2.2 Trapezoidal Rule**: Uses the average of function values at the endpoints:
+### Comparing Monte Carlo and Deterministic Methods
+- **Monte Carlo**:
 
-  $$
-  I \approx \frac{(b - a)}{2} [f(a) + f(b)]
-  $$
+$$\hat{I}_{MC} = \frac{b - a}{N} \sum_{n=1}^N f(X_n),$$
 
-- **2.2.3 Higher-Order Quadrature Rules**
-  - **Simpson's Rule, Gaussian Quadrature**: Provide better accuracy by considering more function evaluations and weighting them appropriately.
-  - **Accuracy Consideration**: Defined by the error between the approximation and the true value.
+    with $X_n \sim \text{Uniform}(a, b)$, and $N$ is the number of samples. 
 
-#### 2.3 Limitations in Higher Dimensions
+![[Pasted image 20241124122934.png]]
 
-- **Curse of Dimensionality**: The computational cost increases exponentially with the number of dimensions.
-- **Grid-Based Methods**: Infeasible for high-dimensional integrals due to the exponential growth in required evaluation points.
+- **Riemann Sum**:
 
-#### 2.4 The Monte Carlo Approach
+$$\hat{I}_{\text{Riemann}} = \sum_k \Delta x_k f(x_k) = \frac{b - a}{K} \sum_{k=1}^K f(x_k),$$
 
-- **Stochastic Computation**: Uses randomness to sample points in the integration domain.
-- **Dimensionality Independence**: The method's efficiency does not degrade significantly with higher dimensions.
+    where $x_k$ are evenly spaced points in $[a, b]$, and $K$ is the number of intervals.
+
+**Key Observation**: In the Monte Carlo method, the sample points $X_n$ are randomly distributed according to $p(x)$, whereas in the Riemann sum, the points $x_k$ are deterministically spaced.
 
 ---
 
-### 3. Evaluating Statistical Expectations
+## Background: Limit Theorems and Convergence
 
-#### 3.1 Rewriting the Integral
+### Law of Large Numbers (LLN)
+The LLN states that the sample average converges to the expected value as the number of samples $N$ approaches infinity.
 
-We can express the integral as an expectation:
+**Formal Statement**:  
+Let $X_1, X_2, \dots, X_N$ be independent and identically distributed (i.i.d.) random variables with finite mean $\mu$. Then:
+
+$$\lim_{N \to \infty} \frac{1}{N} \sum_{n=1}^N X_n = \mu \, (\text{almost surely}).$$
+
+**Almost Surely**:  
+A sequence of random variables $X_1, X_2, \dots, X_N$ satisfies a property "almost surely" if the probability that the property holds is 1. Formally, if $A$ is the event where the property holds, then $P(A)=1$.
+
+In this context, the previous statement means that the sample average of the random variables $X_1, X_2, \dots, X_N$ converges to the expected value $\mu$ with probability 1 as $N \to \infty$. While it is possible (in a theoretical sense) for the property to fail on a set of outcomes, the probability of such a set occurring is zero.
+
+### Central Limit Theorem (CLT)
+The CLT provides a probabilistic description of the convergence rate of the sample average to the expected value, including the distribution of the estimation error.
+
+**Formal Statement**:  
+Let $X_1, X_2, \dots, X_N$ be i.i.d. random variables with mean $\mu$ and variance $\sigma^2$. Then, as $N \to \infty$:
+
+$$\sqrt{N}\left(\frac{1}{N} \sum_{n=1}^N X_n - \mu\right) \to_d \mathcal{N}(0, \sigma^2),$$
+
+where $\to_d$ denotes convergence in distribution.
+
+### Moment Generating Function (Formal Definition)
+
+Let $X$ be a random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, where $X$ takes values in $\mathbb{R}$. The **moment generating function (MGF)** of $X$, denoted by $M_X(t)$, is a function $M_X: \mathbb{R} \to \mathbb{R} \cup \{\infty\}$ defined as:
 
 $$
-I = \int_a^b f(x) \, dx = \int_a^b \frac{f(x)}{p(x)} p(x) \, dx = \mathbb{E}_p \left[ \frac{f(x)}{p(x)} \right]
+M_X(t) = \mathbb{E}[e^{tX}], \quad \text{for all } t \in \mathbb{R} \text{ such that } \mathbb{E}[e^{tX}] \text{ exists}.
 $$
 
-- **$p(x)$**: A probability density function defined on $[a, b]$.
-- **Random Variable Interpretation**: $x$ is treated as a random variable drawn from $p(x)$.
+#### Properties:
 
-#### 3.2 Uniform Distribution Case
+1. **Domain**: The domain of $M_X(t)$ is the set of all $t \in \mathbb{R}$ for which the expectation $\mathbb{E}[e^{tX}]$ is finite:
+   $$
+   \text{Dom}(M_X) = \{t \in \mathbb{R} : \mathbb{E}[e^{tX}] < \infty\}.
+   $$
 
-If $p(x)$ is uniform on $[a, b]$, then $p(x) = \frac{1}{b - a}$:
+2. **Existence**: The MGF exists (is finite) in an open interval containing $t=0$ if and only if all moments $\mathbb{E}[X^k]$ of $X$ exist.
 
-$$
-I = (b - a) \cdot \mathbb{E}_p[f(x)]
-$$
+3. **Expansion**: If $M_X(t)$ exists and is differentiable at $t=0$, it can be expressed as a power series:
+   $$
+   M_X(t) = \sum_{k=0}^\infty \frac{t^k}{k!} \mathbb{E}[X^k],
+   $$
+   where $\mathbb{E}[X^k]$ is the $k$-th moment of $X$.
 
-- **Expectation under Uniform Distribution**: Simplifies computation by sampling uniformly.
+4. **Uniqueness**: If the MGF exists in an open interval containing $t=0$, it uniquely determines the distribution of $X$.
 
-#### 3.3 Monte Carlo Estimation
+5. **Non-negativity**: For any $t \in \text{Dom}(M_X)$, $M_X(t) \geq 1$, with equality at $t=0$.
 
-- **Estimate of the Expectation**:
+#### Remarks:
 
+- The moment generating function, when it exists, provides a compact representation of the moments of a random variable. Differentiating $M_X(t)$ at $t=0$ gives the moments of $X$:
   $$
-  \mathbb{E}_p[f(x)] \approx \frac{1}{N} \sum_{n=1}^N f(u_n)
+  \frac{d^k}{dt^k} M_X(t) \bigg|_{t=0} = \mathbb{E}[X^k].
   $$
+- The MGF is particularly useful in proving convergence results, such as the Central Limit Theorem, and in determining the distribution of sums of independent random variables.
 
-  where $u_n$ are independent samples uniformly drawn from $[a, b]$.
 
-#### 3.4 Comparison with Deterministic Methods
+---
+## Central Limit Theorem for Monte Carlo Estimation
 
-- **Monte Carlo**: Uses random samples.
-- **Riemann Sum**: Uses evenly spaced deterministic points.
+In the context of Monte Carlo estimation, we aim to estimate the integral $I=E[f(X)]$ using independent and identically distributed (i.i.d.) samples $X_n \sim p(x)$. The **Monte Carlo estimator** is given by:
+
+$$\hat{I} = \frac{1}{N} \sum_{n=1}^N \frac{f(X_n)}{p(X_n)}.$$
+
+When $p(x)$ is the uniform distribution over the interval $[0,1]$, the estimator simplifies to:
+
+$$\hat{I} = \frac{1}{N} \sum_{n=1}^{N} f(X_n), \quad X_n \sim \text{Uniform}(0,1).$$
+
+### Formal Derivation Using the Moment-Generating Function (MGF)
+
+To analyze the convergence and distribution of $\hat{I}$, we proceed as follows:
+
+Let $f_n = f(X_n)$ be i.i.d. random variables with mean $\mu = E[f(X)]$ and variance $\sigma_f^2 = \text{Var}[f(X)]$.  
+Without loss of generality, assume that $f_n$ has mean zero. This can be achieved by considering $f_n = f(X_n) - \mu$.
+
+Define the sum of the centered samples:
+
+$$S_N = \sum_{n=1}^{N} f_n.$$
+
+The standardized sum is:
+
+$$Z_N = \frac{S_N}{\sqrt{N} \sigma_f}.$$
+
+The MGF of $f_n$ is defined as:
+
+$$M_f(t) = E[e^{tf_n}].$$
+
+Since the $f_n$ are i.i.d., the MGF of $Z_N$ is:
+
+$$M_{Z_N}(t) = \left(M_f\left(\frac{t}{\sqrt{N} \sigma_f}\right)\right)^N.$$
+
+Assuming $M_f(t)$ exists and is twice differentiable around $t=0$, we expand $M_f$ using Taylor's theorem:
+
+$$M_f\left(\frac{t}{\sqrt{N} \sigma_f}\right) = 1 + \frac{t}{\sqrt{N} \sigma_f} E[f_n] + \frac{t^2}{2N \sigma_f^2} E[f_n^2] + o\left(\frac{1}{N}\right).$$
+
+Since $E[f_n] = 0$, this simplifies to:
+
+$$M_f\left(\frac{t}{\sqrt{N} \sigma_f}\right) = 1 + \frac{t^2}{2N} + \epsilon_N,$$
+
+where $\epsilon_N = o\left(\frac{1}{N}\right)$ represents higher-order terms.
+
+
+Substituting back into $M_{Z_N}(t)$:
+
+$$M_{Z_N}(t) = \left(1 + \frac{t^2}{2N} + \epsilon_N\right)^N \approx \exp\left(\frac{t^2}{2}\right),$$
+
+as $N \to \infty$.
+
+**Conclusion**: The limiting MGF of $Z_N$ is that of a standard normal distribution:
+
+$$M_{Z_N}(t) \to e^{\frac{t^2}{2}} \quad \text{as } N \to \infty.$$
+
+This implies:
+
+$$Z_N = \frac{S_N}{\sqrt{N} \sigma_f} \to_d N(0,1).$$
+
+**Interpretation**: Returning to the Monte Carlo estimator $\hat{I}$, we have:
+
+$$\hat{I} = \mu + \frac{S_N}{N}.$$
+
+Multiplying both sides by $N$ and rearranging:
+
+$$N(\hat{I} - \mu) = S_N = \sigma_f Z_N.$$
+
+Since $Z_N \to_d N(0,1)$, it follows that:
+
+$$N(\hat{I} - \mu) \to_d N(0, \sigma_f^2).$$
+
+Therefore, for large $N$:
+
+$$\hat{I} \sim N\left(\mu, \frac{\sigma_f^2}{N}\right).$$
+
+This formal derivation confirms that the Monte Carlo estimator $\hat{I}$ is approximately normally distributed around the true value $\mu = E[f(X)]$ with variance decreasing at the rate $1/N$.
 
 ---
 
-### 4. Central Limit Theorem and Convergence
+## Implications for Monte Carlo Error
 
-#### 4.1 Law of Large Numbers (LLN)
+The Central Limit Theorem for Monte Carlo estimation has significant implications for the error analysis and efficiency of Monte Carlo methods.
 
-- **Convergence**: The sample mean converges to the expected value as $N \to \infty$.
-- **Unbiasedness**: The Monte Carlo estimate is unbiased—its expected value equals the true expectation.
+**Unbiased Estimator**: The Monte Carlo estimator is unbiased:
 
-#### 4.2 Central Limit Theorem (CLT)
+$$E[\hat{I}] = E\left[\frac{1}{N} \sum_{n=1}^{N} f(X_n)\right] = \frac{1}{N} \sum_{n=1}^{N} E[f(X_n)] = E[f(X)] = I.$$
 
-- **Standard CLT**: For independent, identically distributed (i.i.d.) random variables with finite mean and variance, the normalized sum converges in distribution to a normal distribution.
+**Variance of the Estimator**: The variance is given by:
 
-#### 4.3 Applying CLT to Monte Carlo Estimates
+$$\text{Var}[\hat{I}] = \frac{\sigma_f^2}{N},$$
 
-- **4.3.1 Setup**
+where $\sigma_f^2 = \text{Var}[f(X)]$.
 
-  Let $f_n = f(x_n)$ with $x_n$ drawn from $p(x)$.
+##### Convergence Rate
 
-  - **Mean**: $\mathbb{E}[f_n] = \mu$.
-  - **Variance**: $\text{Var}(f_n) = \sigma^2$.
+**Normal Approximation**: For large $N$, the distribution of $\hat{I}$ approaches a normal distribution:
 
-- **4.3.2 Normalization and MGF**
+$$\hat{I} \sim N\left(I, \frac{\sigma_f^2}{N}\right).$$
 
-  - **Sum**: $S_N = \sum_{n=1}^N f_n$.
+**Error Reduction**: The standard deviation (standard error) of $\hat{I}$ decreases at a rate proportional to $N^{-1/2}$:
 
-  - **Normalized Sum**:
+$$\text{SE}(\hat{I}) = \frac{\sigma_f}{\sqrt{N}}.$$
 
-    $$
-    Z_N = \frac{S_N - N\mu}{\sigma \sqrt{N}}
-    $$
+To reduce the standard deviation by a factor of $k$:
 
-  - **Moment-Generating Function (MGF)**:
+$$\text{SE}_{\text{new}} = \frac{\text{SE}_{\text{old}}}{k} \implies N_{\text{new}} = k^2 N_{\text{old}}.$$
 
-    $$
-    M_{Z_N}(t) = \left( M_f \left( \frac{t}{\sigma \sqrt{N}} \right) \right)^N
-    $$
+This quadratic relationship implies that achieving higher precision requires a substantial increase in sample size.
 
-    where $M_f(t) = \mathbb{E}[e^{t f_n}]$.
+##### Dimension Independence
 
-- **4.3.3 Convergence to Normal Distribution**
+**High-Dimensional Integration**: The convergence rate $O(N^{-1/2})$ is independent of the dimensionality of $X$. This property makes Monte Carlo methods particularly suitable for high-dimensional integrals, as the error does not worsen with increasing dimension.
 
-  - **MGF Approximation**:
+##### Variance Dependence on Function Properties
 
-    $$
-    M_{Z_N}(t) \approx \exp \left( \frac{t^2}{2} \right) \text{ as } N \to \infty
-    $$
+**Function Variability**: The variance $\sigma_f^2$ depends on the variability of $f(X)$:
 
-  - **Implication**: $Z_N$ converges in distribution to $N(0, 1)$.
+$$\sigma_f^2 = E[f(X)^2] - (E[f(X)])^2.$$
 
-#### 4.4 Implications for Monte Carlo Estimates
+Functions with higher variability (larger $\sigma_f^2$) result in higher estimator variance, requiring more samples to achieve a desired precision.
 
-- **Distribution of Estimates**:
+**Function Smoothness**: Smoother functions with lower variance lead to faster convergence of the estimator.
 
-  $$
-  \frac{1}{N} \sum_{n=1}^N f_n \sim N\left(\mu, \frac{\sigma^2}{N}\right)
-  $$
+##### Practical Considerations
 
-- **Standard Error**:
+**Confidence Intervals**: The normal approximation allows for the construction of confidence intervals for $I$:
 
-  $$
-  SE = \frac{\sigma}{\sqrt{N}}
-  $$
+$$\hat{I} \pm z_{\alpha/2} \frac{\sigma_f}{\sqrt{N}},$$
 
-- **Convergence Rate**:
+where $z_{\alpha/2}$ is the critical value from the standard normal distribution corresponding to the desired confidence level $1-\alpha$.
 
-  - **Rate**: $O\left(\frac{1}{\sqrt{N}}\right)$.
-  - **Interpretation**: Doubling the number of samples reduces the standard error by a factor of $\frac{1}{\sqrt{2}}$.
+**Variance Estimation**:
 
-#### 4.5 Factors Affecting Convergence
+In practice, $\sigma_f^2$ is often unknown and must be estimated from the sample:
 
-- **4.5.1 Function Variance ($\sigma^2$)**
-  - **High Variance**: Slower convergence; requires more samples.
-  - **Low Variance**: Faster convergence.
+$$\hat{\sigma}_f^2 = \frac{1}{N-1} \sum_{n=1}^{N} (f(X_n) - \hat{I})^2.$$
 
-- **4.5.2 Function Characteristics**
-  - **Sharp Peaks**: Functions with narrow peaks may lead to higher variance.
-  - **Smoothness**: Smoother functions generally have lower variance.
+**Variance Reduction Techniques**: Reducing $\sigma_f^2$ through variance reduction techniques (e.g., importance sampling, control variates) can significantly improve the efficiency of the Monte Carlo estimator without increasing $N$.
 
 ---
 
-### 5. Rates of Convergence
+## 2-Monte-Carlo-Methods-in-Practice
 
-#### 5.1 The Role of Function Variance
+### 5.1 Random Number Generation
+Monte Carlo methods rely on the ability to generate random samples from the probability distribution $p(x)$. In practice, we use pseudorandom number generators and various sampling algorithms (e.g., inversion method, rejection sampling, Markov Chain Monte Carlo) to obtain samples from $p(x)$.
 
-- **Variance as a Rate Constant**: The inherent variance of $f(x)$ determines the convergence rate.
-- **Variance Reduction Techniques**: Methods like importance sampling can reduce variance.
-
-#### 5.2 Multidimensional Integrals
-
-- **Dimensional Independence**: Monte Carlo convergence rate does not deteriorate with higher dimensions, unlike deterministic methods.
-- **Curse of Dimensionality Mitigation**: Monte Carlo methods remain practical for high-dimensional integrals.
+### 5.2 Limitations and Challenges
+- **Sampling from Complex Distributions**: Sometimes, $p(x)$ may be complex, high-dimensional, or only known up to a normalization constant, making direct sampling challenging.  
+- **Computational Cost**: Generating a large number of samples can be computationally expensive.  
+- **Estimator Variance**: High variance in the estimator can lead to slow convergence and necessitates variance reduction techniques.
 
 ---
 
-## Summary
+## 6. Variance Reduction Techniques
 
-- **Monte Carlo Methods**: Utilize randomness to estimate numerical solutions, especially integrals.
-- **Stochastic Simulation**: Offers an alternative to deterministic numerical methods.
-- **Expectation and Integration Connection**: Integrals can be viewed as expectations over a probability distribution.
-- **Convergence Guaranteed**: By the LLN and CLT, Monte Carlo estimates converge to the true value.
-- **Convergence Rate**: The standard error decreases as $\frac{1}{\sqrt{N}}$, inversely proportional to the square root of the sample size.
-- **Applications**: Monte Carlo methods are foundational in various fields, including machine learning and computational statistics.
+### 6.1 Importance Sampling
 
-## Further Considerations
+#### 6.1.1 Concept
+Importance sampling involves changing the sampling distribution to more effectively capture the regions of the integrand that contribute most to the integral.
 
-- **Importance Sampling**: Choosing a better $p(x)$ to reduce variance.
-- **Variance Reduction**: Techniques to improve convergence rates.
-- **Advanced Monte Carlo Methods**: Markov Chain Monte Carlo (MCMC), Sequential Monte Carlo (SMC).
-- **Practical Implementations**: Handling computational costs, parallelization.
+#### 6.1.2 Derivation
+Given $I = \mathbb{E}_p[f(X)]$, we introduce a proposal distribution $q(x)$ such that $q(x) > 0$ wherever $p(x) > 0$. Then:
 
-By understanding the Monte Carlo method's foundations, we can appreciate its power in tackling complex integrals and statistical problems, especially in high-dimensional spaces where traditional methods struggle.
+$$I = \int f(x)p(x) \, dx = \int f(x)\frac{p(x)}{q(x)}q(x) \, dx = \mathbb{E}_q\left[f(X)\frac{p(X)}{q(X)}\right].$$
+
+#### 6.1.3 Importance Sampling Estimator
+The importance sampling estimator is:
+
+$$\hat{I}_{IS} = \frac{1}{N} \sum_{n=1}^N f(X_n) \frac{p(X_n)}{q(X_n)},$$
+
+where $X_n \sim q(x)$.
+
+#### 6.1.4 Unbiasedness
+The estimator is unbiased:
+
+$$\mathbb{E}_q[\hat{I}_{IS}] = I.$$
+
+#### 6.1.5 Variance of the Estimator
+The variance of the importance sampling estimator is:
+
+$$\text{Var}[\hat{I}_{IS}] = \frac{\sigma_{\tilde{f}}^2}{N},$$
+
+where:
+
+$$\tilde{f}(X) = f(X)\frac{p(X)}{q(X)}, \quad \sigma_{\tilde{f}}^2 = \text{Var}_q[\tilde{f}(X)] = \mathbb{E}_q[\tilde{f}(X)^2] - I^2.$$
+
+#### 6.1.6 Optimal Proposal Distribution
+The optimal $q(x)$ that minimizes $\sigma_{\tilde{f}}^2$ is:
+
+$$q_{\text{opt}}(x) = \frac{|f(x)p(x)|}{\int |f(x)p(x)| \, dx}.$$
+
+---
+
+#### 6.1.7 Practical Considerations
+- **Matching the Proposal to the Integrand**: $q(x)$ should be chosen to be similar in shape to $f(x)p(x)$, especially in regions where $f(x)p(x)$ is large.  
+- **Computational Trade-off**: Sampling from $q(x)$ should be computationally feasible.  
+
+#### 6.1.8 Example: Estimating Tail Probabilities
+Suppose we wish to estimate:
+
+$$I = P(T \geq t_0) = \int_{t_0}^\infty p_T(t) \, dt,$$
+
+where $p_T(t)$ is the probability density function of $T$. If $T$ has an exponential distribution with mean $1$, $p_T(t) = e^{-t}$, and $t_0 = 25$:
+
+- **Vanilla Monte Carlo**:  
+  Sampling directly from $p_T(t)$ is inefficient because $P(T \geq 25)$ is extremely small, and we would need a huge number of samples to obtain a single $T \geq 25$.  
+
+- **Importance Sampling**:  
+  Choose a proposal distribution $q(t)$ that has more probability mass in the tail, such as a Gaussian with mean $\mu = 25$.  
+
+  Compute weights:  
+
+  $$w(t) = \frac{p_T(t)}{q(t)}.$$
+
+  Estimate $I$ using the importance sampling estimator.  
+
+#### 6.1.9 Limitations
+- **Weight Degeneracy**: If $q(x)$ is not a good match to $p(x)f(x)$, the weights $w(x) = \frac{p(x)}{q(x)}$ can have high variance, leading to unstable estimates.  
+- **Normalization**: If $p(x)$ is known only up to a constant, computing $w(x)$ may not be possible.  
+
+---
+
+### 6.2 Control Variates
+
+#### 6.2.1 Concept
+Control variates involve using additional functions with known expectations to reduce the variance of the estimator.  
+
+#### 6.2.2 Single Control Variate
+Suppose we have a function $g(x)$ such that $\mathbb{E}_p[g(X)] = \mu_g$ is known. The control variate estimator is:
+
+$$\hat{I}_{CV} = \hat{I} + c(\hat{\mu}_g - \mu_g),$$
+
+where:
+- $\hat{I} = \frac{1}{N} \sum_{n=1}^N f(X_n)$ is the original estimator.  
+- $\hat{\mu}_g = \frac{1}{N} \sum_{n=1}^N g(X_n)$ is the sample mean of $g(X)$.  
+- $c$ is a scalar coefficient to be determined.  
+
+#### 6.2.3 Variance Reduction
+The variance of $\hat{I}_{CV}$ is:
+
+$$\text{Var}[\hat{I}_{CV}] = \text{Var}[\hat{I}] + c^2 \text{Var}[\hat{\mu}_g] + 2c \text{Cov}[\hat{I}, \hat{\mu}_g].$$
+
+To minimize the variance, we set:
+
+$$c_{\text{opt}} = -\frac{\text{Cov}[\hat{I}, \hat{\mu}_g]}{\text{Var}[\hat{\mu}_g]}.$$
+
+Substituting $c_{\text{opt}}$ back into the variance expression, we find:
+
+$$\text{Var}[\hat{I}_{CV}] = \text{Var}[\hat{I}] - \frac{(\text{Cov}[\hat{I}, \hat{\mu}_g])^2}{\text{Var}[\hat{\mu}_g]}.$$
+
+#### 6.2.4 Multiple Control Variates
+With multiple control variates $g_1(x), g_2(x), \dots, g_M(x)$ and known expectations $\mu_{g_i}$:
+
+- **Estimator**:
+
+    $$\hat{I}_{CV} = \hat{I} + c^\top (\hat{\mu}_g - \mu_g),$$
+
+    where $c = (c_1, \dots, c_M)^\top$, $\hat{\mu}_g = (\hat{\mu}_{g_1}, \dots, \hat{\mu}_{g_M})^\top$, and $\mu_g = (\mu_{g_1}, \dots, \mu_{g_M})^\top$.  
+
+- **Optimal Coefficients**:
+
+    $$c_{\text{opt}} = -C^{-1} b,$$
+
+    where:
+    - $C$ is the covariance matrix of $\hat{\mu}_g$.  
+    - $b$ is the vector of covariances between $\hat{I}$ and $\hat{\mu}_g$.  
+
+#### 6.2.5 Intuition
+- **Correlation**: The greater the correlation between $f(X)$ and $g(X)$, the more effective the variance reduction.  
+- **Known Expectations**: The expectations $\mu_g$ must be known exactly.  
+- **Trade-off**: Computing $c_{\text{opt}}$ requires estimating variances and covariances, which may introduce additional computational overhead.  
+
+#### 6.2.6 Example
+Suppose $f(x)$ is complex but can be approximated by a simpler function $g(x)$ whose expectation $\mu_g$ is known.
+
+- **Estimate the Difference**: Compute $f(X_n) - g(X_n)$, which should have lower variance than $f(X_n)$ if $g(x)$ is a good approximation.  
+- **Adjust the Estimator**:
+
+    $$\hat{I}_{CV} = \hat{I} + c(\hat{\mu}_g - \mu_g).$$
+
+---
+
+## 7. Conclusion
+Monte Carlo methods are powerful tools for numerical integration, especially in high-dimensional spaces where traditional deterministic methods become infeasible. By interpreting integrals as statistical expectations, we can leverage random sampling to estimate these expectations with quantifiable error properties.
+
+**Key takeaways include**:
+- **Unbiased Estimators**: Monte Carlo estimators are unbiased, meaning they converge to the true value in expectation.  
+- **Convergence Rate**: The error decreases at a rate proportional to $N^{-1/2}$, independent of the dimension of the problem.  
+- **Variance Reduction**: Techniques like importance sampling and control variates can significantly reduce estimator variance, improving convergence without increasing the number of samples.  
+
+Understanding and applying these methods requires a solid grasp of probability theory, statistical concepts, and numerical methods. With these tools, practitioners can tackle complex integrals arising in various fields, from physics and engineering to finance and machine learning.
+
+---
+
+## 8. References
+1. *Monte Carlo Statistical Methods*, Christian P. Robert and George Casella.  
+2. *Simulation and the Monte Carlo Method*, Reuven Y. Rubinstein and Dirk P. Kroese.  
+3. *Probabilistic Machine Learning: Advanced Topics*, Kevin P. Murphy.  
+4. *Pattern Recognition and Machine Learning*, Christopher M. Bishop.  
+5. *An Introduction to Statistical Learning*, Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.  
+
+**Note**: This document builds upon foundational concepts and extends explanations to facilitate a deep understanding of Monte Carlo methods for advanced students and practitioners in computational statistics and machine learning.
