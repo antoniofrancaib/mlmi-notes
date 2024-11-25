@@ -1,5 +1,7 @@
 This repository contains all my notes during my MPhil in Machine Learning and Machine Intelligence at the University of Cambridge (2024-2025). 
 
+# Index 
+---
 ## Introduction to Machine Learning (MLMI1)
 
 - [Background](0-prob-background.md)
