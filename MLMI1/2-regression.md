@@ -1,5 +1,7 @@
 # Regression
 
+![Alt text for the image](../assets/1.png)
+
 Regression $\rightarrow$ predicting a **continuous output** $y^\star$ given an input vector $x^\star \in \mathbb{R}^D$
 
 **Regression Goal**: to find a function $f: \mathbb{R}^D \rightarrow \mathbb{R}^{D'}$ to make future predictions $y^\star = f(x^\star)$.
