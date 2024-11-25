@@ -175,7 +175,7 @@ Each player playes against multiple opponents, possibly multiple times; ***what 
 
 ![text](../assets/4F13/rank-joint.png)
 
-**Visualizing this:
+**Visualizing this**:
 
 - **3D Joint Posterior Space:** The posterior $p(w1​,w2​,w3​)$ defines a probability density over a 3D space where:
     
