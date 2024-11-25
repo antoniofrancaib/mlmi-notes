@@ -9,7 +9,7 @@
 [index](#index)
 ### Motivation
 
-Competition is a fundamental aspect of human nature and society. It drives progress and excellence in various fields, especially in sports. In contemporary times, ranking systems are prevalent in virtually every sport.
+***Competition*** is a fundamental aspect of human nature and society. It drives progress and excellence in various fields, especially in sports. In contemporary times, ranking systems are prevalent in virtually every sport.
 
 #### The Fundamental Question: 
 Despite the widespread use of ranking systems, they often fail to answer a crucial question effectively:
@@ -45,7 +45,7 @@ While the ATP ranking system provides a structured method for ranking players, i
 ### Towards a Probabilistic Ranking System
 
 #### Defining Player Skill
-To address these limitations, we propose a probabilistic ranking system that focuses on inferring each player's skill level, denoted by $w_i$, where $i$ represents a player.
+To address these limitations, we propose a probabilistic ranking system that focuses on inferring each ***player's skill level***, denoted by $w_i$, where $i$ represents a player.
 
 Key Properties of the Skill Model:
 - **Comparability**: Skills are on a common scale; a higher skill implies a higher chance of winning.
@@ -105,14 +105,17 @@ $$p(y \mid w_1, w_2) = \int_{-\infty}^{\infty} \delta(y - \text{sign}(t)) \cdot 
 This integral simplifies to:
 
 $$p(y \mid w_1, w_2) = \int_{t : y \cdot t > 0} N(t \mid w_1 - w_2, \sigma^2) \, dt = \Phi\left(\frac{y (w_1 - w_2)}{\sigma}\right)$$
-where we have the little compactifying trick for binary variables $y = ±1$. 
+where we have the little compactifying trick for binary variables $y = ±1$: 
+
+$$p(y = 1 \mid z) = \Phi(z) \implies p(y = -1 \mid z) = 1 - \Phi(z) = \Phi(-z) \implies p(y \mid z) = \Phi(yz).$$
 
 Plot for $\sigma = 1$: 
 
 
-![Alt text for the image](../assets/4F13/rank-prob.png)
+![text](../assets/4F13/rank-prob.png)
 
 
+---
 ## TrueSkill™: A Bayesian Skill Rating System
 
 ### Introduction to TrueSkill™
@@ -152,6 +155,38 @@ where:
 - The posterior distribution $p(w \mid y)$ does not have a closed-form solution due to the non-conjugate likelihood function involving $\Phi(\cdot)$.
 - The skills become correlated, making the joint distribution complex.
 
+#### Visualization: 
+
+To visualize this, suppose three players with skills $w_1, w_2, w_3$. The posterior between two of them, given a match outcome, is given by: 
+$$ p(w_1, w_2 \mid y) = \frac{\mathcal{N}(w_1; \mu_1, \sigma_1^2) \mathcal{N}(w_2; \mu_2, \sigma_2^2) \Phi(y(w_1 - w_2))}{\iint \mathcal{N}(w_1; \mu_1, \sigma_1^2) \mathcal{N}(w_2; \mu_2, \sigma_2^2) \Phi(y(w_1 - w_2)) dw_1 dw_2}. $$
+
+- The numerator consists of: - Gaussian priors $\mathcal{N}(w_1; \mu_1, \sigma_1^2)$ and $\mathcal{N}(w_2; \mu_2, \sigma_2^2)$. 
+- The likelihood $\Phi(y(w_1 - w_2))$, representing the probability of the observed outcome given the skill difference. 
+
+**Properties of the Posterior:** 
+- **Correlation:** Skills $w_1$ and $w_2$ become correlated after observing $y$, even if they were independent initially. 
+- **Non-Gaussian:** The posterior is no longer Gaussian due to the product with $\Phi(y(w_1 - w_2))$, which introduces a nonlinear term.
+
+**Normalizing Constant:** - The denominator, $p(y)$, is the marginal probability of the outcome: $$ p(y) = \iint \mathcal{N}(w_1; \mu_1, \sigma_1^2) \mathcal{N}(w_2; \mu_2, \sigma_2^2) \Phi(y(w_1 - w_2)) dw_1 dw_2. $$ - This has a closed-form solution: $$ p(y) = \Phi\left(\frac{y(\mu_1 - \mu_2)}{\sqrt{\sigma_1^2 + \sigma_2^2}}\right), $$ which is a smoother version of the likelihood $p(y \mid w_1, w_2)$.
+
+**Intuition Behind $p(y)$:** - The smoothing effect arises because $p(y)$ integrates over all possible skill values, averaging the likelihood over the uncertainty in $w_1$ and $w_2$.
+
+Each player playes against multiple opponents, possibly multiple times; ***what does the joint posterior look like?***
+
+![text](../assets/4F13/rank-joint.png)
+
+**Visualizing this:
+
+- **3D Joint Posterior Space:** The posterior $p(w1​,w2​,w3​)$ defines a probability density over a 3D space where:
+    
+    - Each axis corresponds to one player’s skill $(w1, w2​, w3)$.
+    - Every point in this space represents a specific combination of skills for the three players.
+    - The **probability density** at each point indicates how likely that skill combination is given the observed outcomes.
+- **Heatmap in 3D:** A heatmap in this context would color-code regions of the 3D space based on the probability density:
+    
+    - High probability density (e.g., bright red): Likely skill combinations.
+    - Low probability density (e.g., dark blue): Unlikely skill combinations.
+
 --- 
 
 ## 16-Gibbs-Sampling-for-Inference
@@ -170,6 +205,7 @@ where $x \in \mathbb{R}^D$ and $D$ is large. When $p(x)$ is complex or high-dime
 1. **Evaluability:** We can evaluate $ϕ(x)$ and $p(x)$ at any point $x$.
 2. **High Dimensionality:** The dimensionality $D$ is large, making traditional integration methods impractical.
 
+![text](../assets/4F13/rank-int.png)
 ### Numerical Integration on a Grid
 #### Grid-Based Approximation
 One straightforward approach to approximate the integral is using numerical integration over a grid:
