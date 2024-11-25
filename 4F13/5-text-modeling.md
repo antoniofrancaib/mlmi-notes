@@ -29,7 +29,7 @@ One common approach is to represent a document by the frequency of occurrence of
 
 ## Word Counts in Text
 
-![[Pasted image 20241123105843.png]]
+![[text-data.png]]
 
 ### Word Frequency Analysis
 By analyzing word frequencies, we observe that for different text collection, similar behaviours:
@@ -48,7 +48,7 @@ $$f(r) \propto \frac{1}{r}$$
 - $f(r)$: Frequency of the word with rank $r$.
 - $r$: Rank of the word when ordered by decreasing frequency.
 
-![[Pasted image 20241123110039.png]]
+![[text-law.png]]
 
 - The x-axis is the cumulative fraction of distinct words included (from the most frequent to the least frequent).
 - The y-axis is the **frequency of the current word** at that point in the ranking.
@@ -133,7 +133,7 @@ where the **Binomial Coefficient**  $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
 - **Use Case**: When only counts of successes are important, not the specific sequence.
 
 #### Naming of discrete distributions
-![[Pasted image 20241123111817.png]]
+![[text-vars.png]]
 
 ### Bayesian Inference and Priors
 
@@ -162,7 +162,7 @@ The Beta distribution is a continuous probability distribution defined on the in
 
   where $\Gamma(\cdot)$ is the gamma function, which generalizes the factorial function.
 
-![[Pasted image 20241123112145.png]]
+![[text-bta.png]]
 
 #### Properties
 - **Mean**:
@@ -183,7 +183,7 @@ Given observed data $D$ with $k$ successes and $n-k$ failures:
 - **Updating Beliefs**: The posterior Beta distribution combines prior beliefs with observed data.
 - **Flexibility**: By adjusting $\alpha$ and $\beta$, we can represent different levels of certainty.
 
-![[Pasted image 20241123113706.png]]
+![[text-priors.png]]
 
 ### Making Predictions
 
@@ -206,7 +206,7 @@ Suppose we have two models for the coin:
   - Assumes $p$ is unknown and uniformly distributed over $[0, 1]$.
   - Requires estimating $p$.
 
-![[Pasted image 20241123120947.png]]
+![[text-probs.png]]
 
 ### Bayesian Model Comparison
 - **Prior Probabilities**:

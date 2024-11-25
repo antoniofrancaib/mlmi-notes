@@ -94,7 +94,7 @@ $$
 - **Parameters**: Coefficients $w = [w_0, w_1, \dots, w_M]^T$.
 - **Basis Functions**: $\phi_j(x) = x^j$ for $j=0, 1, \dots, M$.
 
-![[Pasted image 20241119102841.png]]
+![[pols2.png]]
 
 ### Fitting the Model: Least Squares Approach
 We aim to find $w$ that minimizes the sum of squared errors:

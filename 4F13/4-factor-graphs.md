@@ -27,7 +27,7 @@ The corresponding factor graph has:
 - **Factor Nodes**: $f_1, f_2, f_3, f_4$
 - **Edges**: Connect factors to the variables they depend on.
 
-![[Pasted image 20241121214716.png]]
+![[fact-grph.png]]
 #### Questions We Can Answer Using Factor Graphs
 1. **Marginal Distributions**: What is $p(w)$?
 2. **Conditional Distributions**: What is $p(w\mid y)$?
@@ -61,7 +61,7 @@ $$p(w)=\left(\sum_v f_1(v,w)\right)\cdot\left(\sum_x f_2(w,x)\cdot\left(\sum_y f
 
 The complexity reduces from $O(K^5)$ to $O(K^4)$ or even $O(K^2)$ with further optimizations.
 
-![[Pasted image 20241121215227.png]]
+![[fact-disc.png]]
 
 ### The Sum-Product Algorithm
 
@@ -117,7 +117,7 @@ The factor graph for TrueSkill™ includes:
 3. **Outcome Factors**: Incorporating observed game outcomes.
    $$k_g(t_g,y_g)=\delta(y_g-\text{sign}(t_g))$$
 
-![[Pasted image 20241122102423.png]]
+![[fact-flow.png]]
 ### Goals
 1. **Compute Marginals**: Determine the marginal distributions of player skills $p(w_i)$.
 2. **Update Beliefs**: Incorporate observed game outcomes to update beliefs about player skills.
@@ -151,7 +151,7 @@ EP is an iterative algorithm used to approximate complex probability distributio
 7. **Compute Messages from Games to Skills**: Update skill messages based on incoming messages from performances.
 8. **Iterate**: Repeat the process until messages and marginals converge.
 
-![[Pasted image 20241122102907.png]]
+![[fact-map.png]]
 ### Detailed Steps: 
 
 ##### Step 0: Initialization
@@ -390,7 +390,7 @@ where:
 - $Z_t$ is the normalization constant.
 - $y \in \{-1, +1\}$ represents the observed game outcome.
 
-![[Pasted image 20241122124517.png]]
+![[rank-truncated.png]]
 ##### Objective: Approximate $p(t)$ with a Gaussian $q(t)$
 
 We aim to approximate the truncated Gaussian $p(t)$ with a Gaussian $q(t)$ that has the same first and second moments (mean and variance):

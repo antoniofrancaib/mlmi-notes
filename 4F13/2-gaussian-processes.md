@@ -119,7 +119,7 @@ $$
 - **Illustration**:
   - The shaded regions and lines in the plots show how the GP updates its predictions as new data points are added.
 
-![[Pasted image 20241119181834.png]]
+![[gp-samp.png]]
 
 #### **Which Method to Use?**
 
@@ -184,7 +184,7 @@ $$
 - **Prior Samples**: Functions drawn from the GP prior.
 - **Posterior Samples**: Functions drawn from the GP posterior, which now pass through (or near) the observed data points.
 
-![[Pasted image 20241119184053.png]]
+![[gp-data.png]]
 
 ### Predictive Distribution
 The predictive distribution in Gaussian Processes (GPs) is essentially the posterior distribution over the function values at a new input point $x_*$. This is because GPs are non-parametric models, and we **do not need to integrate over explicit parameters** like in parametric Bayesian models. The predictive distribution for a new input $x_*$ is given by:
@@ -313,7 +313,7 @@ The mean posterior predictive function is plotted for 3 different length scales 
 
 Bayes' rule helps identify the right model complexity by leveraging the marginal likelihood, which balances goodness-of-fit with model simplicity. Overly simple models (highly peaked marginal likelihood) fail to capture data variability, while overly complex models (broad marginal likelihood) risk overfitting. The optimal model, guided by Occam's Razor, maximizes the marginal likelihood by being complex enough to explain the data but simple enough to generalize well, inherently penalizing unnecessary complexity. This balance ensures a principled trade-off between model flexibility and parsimony.
 
-![[Pasted image 20241124175711.png]]
+![[occam.png]]
 
 **An illustrative analogous example**: 
 
@@ -326,7 +326,7 @@ $$
 This example demonstrates how fitting the variance $\sigma^2$ of a zero-mean Gaussian distribution affects the likelihood of the observed data. The formula highlights how the log-likelihood balances the goodness-of-fit term $-\frac{1}{2} y^\top I_y y / \sigma^2$ with complexity penalties, such as $-\frac{1}{2} \log |\sigma^2|$ and the constant term $-\frac{n}{2} \log (2\pi)$. The visualizations show how different variances $\sigma^2$ impact the Gaussian’s shape, emphasizing the trade-off between fitting the data well and avoiding overfitting. This optimization ensures the model captures the data's structure effectively.
 
 
-![[Pasted image 20241124180138.png]]
+![[variance-estim.png]]
 
 
 ---
@@ -416,7 +416,7 @@ Conversely, any GP with covariance function $k(x, x') = \phi(x)^T A \phi(x')$ ca
    - Hyperparameters $v_d$ scale the importance of input dimensions $d$.
    - ARD enables automatic selection of relevant features in the data.
 
-![[Pasted image 20241121124727.png]]
+![[gp-2d.png]]
 
 ---
 
@@ -436,7 +436,7 @@ Conversely, any GP with covariance function $k(x, x') = \phi(x)^T A \phi(x')$ ca
      k_{SE}(r) = \exp\left(-\frac{r^2}{2\ell^2}\right).
      $$
      
-![[Pasted image 20241121124807.png]]
+![[gp-covariance.png]]
 
 ### Matérn Covariance Functions
 
@@ -465,7 +465,7 @@ Conversely, any GP with covariance function $k(x, x') = \phi(x)^T A \phi(x')$ ca
 3. **Intuition**
    - The hyperparameter $\nu$ controls the smoothness of the sampled functions. Larger $\nu$ implies smoother functions.
 
-![[Pasted image 20241121124847.png]]
+![[gp-cov.png]]
 
 ---
 
@@ -481,7 +481,7 @@ Conversely, any GP with covariance function $k(x, x') = \phi(x)^T A \phi(x')$ ca
 2. **Intuition**
    - By transforming the inputs into $u = (\sin(x), \cos(x))^\top$, the covariance measures periodic distances in this transformed space.
 
-![[Pasted image 20241121124912.png]]
+![[gp-covar.png]]
 
 Three functions drawn at random; left $> 1$, and right $< 1$.
 
@@ -500,7 +500,7 @@ Three functions drawn at random; left $> 1$, and right $< 1$.
      k(x, x') = \sigma^2 + xx'\sigma^2 + \lambda \int_0^1 \min(x, x')^3 dx.
      $$
 
-![[Pasted image 20241121125134.png]]
+![[gp-vis.png]]
 ### Neural Networks and GPs
 
 1. **Large Neural Networks**
@@ -541,7 +541,7 @@ Covariance functions have to be possitive definite.
 
 3. **Illustrative Example**  
    - A GP with a squared exponential covariance function corresponds to an infinite linear model with Gaussian basis functions **placed everywhere in the input space**, not just at training points. This results in smoother, more realistic models.
-![[Pasted image 20241121122908.png]]
+![[gp-finite.png]]
 ### Dangers of Finite Basis Functions
 
 1. **Finite Linear Models with Localized Basis Functions**

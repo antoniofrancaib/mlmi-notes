@@ -14,7 +14,7 @@ In the simplest form, we can model a collection of documents by considering each
 - **Word Index:** Each word in the vocabulary is assigned an index from $1$ to $M$.
 - **Word in Document $d$ at Position $n$ ($w_{dn}$):** The $n$-th word in document $d$, where $w_{dn} \in \{1, 2, ..., M\}$.
 - **Word Distribution ($\beta$):** A vector of probabilities $\beta = [\beta_1, \beta_2, ..., \beta_M]^T$, where $\beta_m$ is the probability of word $m$ being selected.
-![[Pasted image 20241124105609.png]]
+![[text-simpl.png]]
 
 ### The Categorical Distribution
 The categorical distribution is a discrete probability distribution that describes the probability of a single trial resulting in one of $M$ possible outcomes.
@@ -93,7 +93,7 @@ To overcome the limitations of the simple model, we introduce a mixture model th
    $$w_{dn} \sim \text{Cat}(\beta_{z_d})$$
    where $\beta_{z_d}$ is the word distribution for category $z_d$.
 
-![[Pasted image 20241124111305.png]]
+![[word-doc.png]]
 
 ### Model Parameters
 - **Category Probabilities ($\pi$):** Parameters of the categorical distribution over document categories.

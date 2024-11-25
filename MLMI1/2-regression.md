@@ -11,7 +11,7 @@ _Regression Jargon_:
 Output space marks the difference between scalar regression or multivariate regression. 
 Problems may involve ***interpolation***, where predictions are close to the training data, or ***extrapolation***, where predictions are far from the training data.
 
-![[Pasted image 20241107124021.png]]
+![[reg.png]]
 
 ---
 # Linear-Regression
@@ -94,7 +94,7 @@ Suitable basis functions include:
 - Sinusoids: $\phi_{d}(x) = \cos(\omega_d x + \phi_d)$
 - Gaussian bumps: $\phi_d(x) = \exp\left( -\frac{(x - \mu_d)^2}{2\sigma^2} \right)$
 
-![[Pasted image 20241107130144.png]]
+![[basis.png]]
 
 ## Least Squares and Maximum Likelihood Fitting
 
@@ -350,7 +350,7 @@ $$
 \end{align*}
 $$
 
-![[Pasted image 20241107170412.png]]
+![[bay-reg.png]]
 
 ## Equivalence to Regularization
 

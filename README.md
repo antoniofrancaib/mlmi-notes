@@ -29,4 +29,4 @@ Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
 
 
 Tasks: 
-- changes images with format ![Alt text for the image](../assets/1.png)
+- changes images with format ![Alt text for the image](reg.png)

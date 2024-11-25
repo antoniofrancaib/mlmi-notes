@@ -109,7 +109,9 @@ where we have the little compactifying trick for binary variables $y = ±1$.
 
 Plot for $\sigma = 1$: 
 
-![[Pasted image 20241121174428.png]]
+
+![Alt text for the image](../assets/4F13/rank-prob.png)
+
 
 ## TrueSkill™: A Bayesian Skill Rating System
 

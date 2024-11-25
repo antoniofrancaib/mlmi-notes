@@ -19,7 +19,7 @@ Logistic regression models the probability that a given input $x_n$ belongs to c
   $$p(y_n = 1 \mid x_n, w) = \sigma(a_n) = \frac{1}{1 + \exp(-a_n)}$$
   - Maps the linear activation $a_n$ to a probability between 0 and 1.
 
-![Linear Neuron](assets/linear_neuron.gif)
+![Linear Neuron](linear_neuron.gif)
 
 ![Single Neuron](single_neuron.gif)
 
