@@ -27,3 +27,4 @@ Reference Book: [Rasmussen, C. E., & Williams, C. K. I. (2006). _Gaussian Proces
 Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
 
 
+![Alt text for the image](1.png)
