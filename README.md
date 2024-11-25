@@ -1,4 +1,4 @@
-This repository contains all my notes during my MPhil in Machine Learning and Machine Intelligence at the University of Cambridge (2024-2025). 
+This repository contains all my notes during my MPhil in Machine Learning and Machine Intelligence at the University of Cambridge (2024-2025). For suggestions and inquiries, feel free to reach out via antoniofrancaib@gmail.com
 
 # Index 
 
@@ -27,4 +27,3 @@ Reference Book: [Rasmussen, C. E., & Williams, C. K. I. (2006). _Gaussian Proces
 Docs: https://mlg.eng.cam.ac.uk/teaching/4f13/2425/
 
 
-For suggestions and inquiries, feel free to reach out via antoniofrancaib@gmail.com
