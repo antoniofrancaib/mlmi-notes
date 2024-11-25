@@ -27,7 +27,7 @@ The corresponding factor graph has:
 - **Factor Nodes**: $f_1, f_2, f_3, f_4$
 - **Edges**: Connect factors to the variables they depend on.
 
-![[fact-grph.png]]
+![[../assets/4F13/fact-grph.png]]
 #### Questions We Can Answer Using Factor Graphs
 1. **Marginal Distributions**: What is $p(w)$?
 2. **Conditional Distributions**: What is $p(w\mid y)$?
